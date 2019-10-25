@@ -1,6 +1,6 @@
-using Nm.Lib.Data.Abstractions;
+using NetModular.Lib.Data.Abstractions;
 
-namespace Nm.Module.Common.Infrastructure.Repositories.MySql
+namespace NetModular.Module.Common.Infrastructure.Repositories.MySql
 {
     public class AreaRepository : SqlServer.AreaRepository
     {

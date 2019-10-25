@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nm.Lib.Data.Abstractions;
-using Nm.Lib.Data.Core;
-using Nm.Lib.Data.Query;
-using Nm.Module.Admin.Domain.Account;
-using Nm.Module.Common.Domain.Dict;
-using Nm.Module.Common.Domain.Dict.Models;
+using NetModular.Lib.Data.Abstractions;
+using NetModular.Lib.Data.Core;
+using NetModular.Lib.Data.Query;
+using NetModular.Module.Admin.Domain.Account;
+using NetModular.Module.Common.Domain.Dict;
+using NetModular.Module.Common.Domain.Dict.Models;
 
-namespace Nm.Module.Common.Infrastructure.Repositories.SqlServer
+namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
 {
     public class DictRepository : RepositoryAbstract<DictEntity>, IDictRepository
     {

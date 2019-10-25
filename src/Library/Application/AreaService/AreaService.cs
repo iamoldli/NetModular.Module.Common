@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Nm.Lib.Cache.Abstractions;
-using Nm.Lib.Data.Abstractions;
-using Nm.Lib.Utils.Core.Extensions;
-using Nm.Lib.Utils.Core.Result;
-using Nm.Module.Common.Application.AreaService.ViewModels;
-using Nm.Module.Common.Domain.Area;
-using Nm.Module.Common.Domain.Area.Models;
-using Nm.Module.Common.Infrastructure;
-using Nm.Module.Common.Infrastructure.AreaCrawling;
-using Nm.Module.Common.Infrastructure.Repositories;
+using NetModular.Lib.Cache.Abstractions;
+using NetModular.Lib.Data.Abstractions;
+using NetModular.Lib.Utils.Core.Extensions;
+using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.AreaService.ViewModels;
+using NetModular.Module.Common.Domain.Area;
+using NetModular.Module.Common.Domain.Area.Models;
+using NetModular.Module.Common.Infrastructure;
+using NetModular.Module.Common.Infrastructure.AreaCrawling;
+using NetModular.Module.Common.Infrastructure.Repositories;
 
-namespace Nm.Module.Common.Application.AreaService
+namespace NetModular.Module.Common.Application.AreaService
 {
     public class AreaService : IAreaService
     {
@@ -97,7 +97,7 @@ namespace Nm.Module.Common.Application.AreaService
 
             if (await _repository.UpdateAsync(entity))
             {
-                //Çå³ý»º´æ
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 await ClearCache(entity);
             }
 
@@ -120,7 +120,7 @@ namespace Nm.Module.Common.Application.AreaService
             return ResultModel.Success();
         }
 
-        //²åÈëÅÀÈ¡µÄÊý¾Ý
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         private async Task CrawlingInsert(AreaEntity entity, List<AreaCrawlingModel> children, IUnitOfWork uow)
         {
             if (await _repository.AddAsync(entity, uow))
@@ -159,7 +159,7 @@ namespace Nm.Module.Common.Application.AreaService
         }
 
         /// <summary>
-        /// Çå³þ»º´æ
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>

@@ -1,6 +1,6 @@
-using  Nm.Lib.Data.Query;
+using  NetModular.Lib.Data.Query;
 
-namespace  Nm.Module.Common.Domain.Area.Models
+namespace  NetModular.Module.Common.Domain.Area.Models
 {
     public class AreaQueryModel : QueryModel
     {

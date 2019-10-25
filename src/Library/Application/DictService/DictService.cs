@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using Nm.Lib.Cache.Abstractions;
-using Nm.Lib.Utils.Core.Result;
-using Nm.Module.Common.Application.DictService.ViewModels;
-using Nm.Module.Common.Domain.Dict;
-using Nm.Module.Common.Domain.Dict.Models;
+using NetModular.Lib.Cache.Abstractions;
+using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.DictService.ViewModels;
+using NetModular.Module.Common.Domain.Dict;
+using NetModular.Module.Common.Domain.Dict.Models;
 
-namespace Nm.Module.Common.Application.DictService
+namespace NetModular.Module.Common.Application.DictService
 {
     public class DictService : IDictService
     {

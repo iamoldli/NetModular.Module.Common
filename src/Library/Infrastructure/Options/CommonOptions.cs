@@ -1,6 +1,6 @@
-using Nm.Lib.Utils.Core.Options;
+using NetModular.Lib.Utils.Core.Options;
 
-namespace Nm.Module.Common.Infrastructure.Options
+namespace NetModular.Module.Common.Infrastructure.Options
 {
     /// <summary>
     /// 通用模块配置项

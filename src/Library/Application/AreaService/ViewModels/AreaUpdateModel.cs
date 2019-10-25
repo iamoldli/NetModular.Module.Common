@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Nm.Module.Common.Application.AreaService.ViewModels
+namespace NetModular.Module.Common.Application.AreaService.ViewModels
 {
     /// <summary>
     /// 区划代码添加模型

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nm.Lib.Data.Abstractions;
-using Nm.Module.Common.Domain.Area.Models;
+using NetModular.Lib.Data.Abstractions;
+using NetModular.Module.Common.Domain.Area.Models;
 
-namespace Nm.Module.Common.Domain.Area
+namespace NetModular.Module.Common.Domain.Area
 {
     /// <summary>
     /// 区划代码仓储

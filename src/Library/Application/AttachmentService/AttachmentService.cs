@@ -3,19 +3,19 @@ using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Extensions.Options;
-using Nm.Lib.Utils.Core.Extensions;
-using Nm.Lib.Utils.Core.Options;
-using Nm.Lib.Utils.Core.Result;
-using Nm.Module.Common.Application.AttachmentService.ResultModels;
-using Nm.Module.Common.Application.AttachmentService.ViewModels;
-using Nm.Module.Common.Domain.Attachment;
-using Nm.Module.Common.Domain.Attachment.Models;
-using Nm.Module.Common.Domain.AttachmentOwner;
-using Nm.Module.Common.Domain.MediaType;
-using Nm.Module.Common.Infrastructure.Repositories;
-using FileInfo = Nm.Lib.Utils.Core.Files.FileInfo;
+using NetModular.Lib.Utils.Core.Extensions;
+using NetModular.Lib.Utils.Core.Options;
+using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.AttachmentService.ResultModels;
+using NetModular.Module.Common.Application.AttachmentService.ViewModels;
+using NetModular.Module.Common.Domain.Attachment;
+using NetModular.Module.Common.Domain.Attachment.Models;
+using NetModular.Module.Common.Domain.AttachmentOwner;
+using NetModular.Module.Common.Domain.MediaType;
+using NetModular.Module.Common.Infrastructure.Repositories;
+using FileInfo = NetModular.Lib.Utils.Core.Files.FileInfo;
 
-namespace Nm.Module.Common.Application.AttachmentService
+namespace NetModular.Module.Common.Application.AttachmentService
 {
     public class AttachmentService : IAttachmentService
     {
@@ -46,7 +46,7 @@ namespace Nm.Module.Common.Application.AttachmentService
             return ResultModel.Success(result);
         }
         /// <summary>
-        /// É¾³ý
+        /// É¾ï¿½ï¿½
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -92,7 +92,7 @@ namespace Nm.Module.Common.Application.AttachmentService
             {
                 if (await _repository.AddAsync(entity))
                 {
-                    //Èç¹ûÐèÒªÊÚÈ¨·ÃÎÊ¸½¼þ£¬ÐèÒªÌí¼ÓÓµÓÐÕß¹ØÁªÐÅÏ¢
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½È¨ï¿½ï¿½ï¿½Ê¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ß¹ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
                     var ownerEntity = new AttachmentOwnerEntity
                     {
                         AttachmentId = entity.Id,
@@ -109,7 +109,7 @@ namespace Nm.Module.Common.Application.AttachmentService
                 }
             }
 
-            return result.Failed("ÉÏ´«Ê§°Ü");
+            return result.Failed("ï¿½Ï´ï¿½Ê§ï¿½ï¿½");
         }
 
         public async Task<IResultModel<FileDownloadModel>> Download(Guid id, Guid accountId)
@@ -118,20 +118,20 @@ namespace Nm.Module.Common.Application.AttachmentService
 
             var attachment = await _repository.GetAsync(id);
             if (attachment == null)
-                return result.Failed("¸½¼þ²»´æÔÚ");
+                return result.Failed("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
             if (attachment.Auth)
             {
                 var has = await _ownerRepository.Exist(new AttachmentOwnerEntity { AccountId = accountId, AttachmentId = id });
                 if (!has)
                 {
-                    return result.Failed("ÄúÎÞÈ¨·ÃÎÊ¸Ã¸½¼þ");
+                    return result.Failed("ï¿½ï¿½ï¿½ï¿½È¨ï¿½ï¿½ï¿½Ê¸Ã¸ï¿½ï¿½ï¿½");
                 }
             }
 
             var filePath = Path.Combine(_moduleCommonOptions.UploadPath, attachment.FullPath);
             if (!File.Exists(filePath))
-                return result.Failed("ÎÄ¼þ²»´æÔÚ");
+                return result.Failed("ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
             return result.Success(new FileDownloadModel(filePath, attachment.FileName, attachment.MediaType));
         }

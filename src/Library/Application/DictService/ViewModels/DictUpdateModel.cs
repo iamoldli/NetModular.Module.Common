@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Nm.Module.Common.Application.DictService.ViewModels
+namespace NetModular.Module.Common.Application.DictService.ViewModels
 {
     /// <summary>
     /// 字典添加模型

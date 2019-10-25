@@ -1,10 +1,10 @@
 using AutoMapper;
-using Nm.Lib.Mapper.AutoMapper;
-using Nm.Module.Common.Application.AreaService.ViewModels;
-using Nm.Module.Common.Domain.Area;
-using Nm.Module.Common.Infrastructure.AreaCrawling;
+using NetModular.Lib.Mapper.AutoMapper;
+using NetModular.Module.Common.Application.AreaService.ViewModels;
+using NetModular.Module.Common.Domain.Area;
+using NetModular.Module.Common.Infrastructure.AreaCrawling;
 
-namespace Nm.Module.Common.Application.AreaService
+namespace NetModular.Module.Common.Application.AreaService
 {
     public class MapperConfig : IMapperConfig
     {

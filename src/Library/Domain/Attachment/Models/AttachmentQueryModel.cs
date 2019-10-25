@@ -1,11 +1,11 @@
-using  Nm.Lib.Data.Query;
+using  NetModular.Lib.Data.Query;
 
-namespace  Nm.Module.Common.Domain.Attachment.Models
+namespace  NetModular.Module.Common.Domain.Attachment.Models
 {
     public class AttachmentQueryModel : QueryModel
     {
         /// <summary>
-        /// Ãû³Æ
+        /// ï¿½ï¿½ï¿½ï¿½
         /// </summary>
         public string Name { get; set; }
     }

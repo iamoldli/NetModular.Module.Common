@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nm.Lib.Data.Abstractions;
-using Nm.Lib.Data.Core;
-using Nm.Lib.Data.Query;
-using Nm.Module.Common.Domain.Area;
-using Nm.Module.Common.Domain.Area.Models;
+using NetModular.Lib.Data.Abstractions;
+using NetModular.Lib.Data.Core;
+using NetModular.Lib.Data.Query;
+using NetModular.Module.Common.Domain.Area;
+using NetModular.Module.Common.Domain.Area.Models;
 
-namespace Nm.Module.Common.Infrastructure.Repositories.SqlServer
+namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
 {
     public class AreaRepository : RepositoryAbstract<AreaEntity>, IAreaRepository
     {

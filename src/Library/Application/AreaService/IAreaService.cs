@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nm.Lib.Utils.Core.Result;
-using Nm.Module.Common.Application.AreaService.ViewModels;
-using Nm.Module.Common.Domain.Area;
-using Nm.Module.Common.Domain.Area.Models;
-using Nm.Module.Common.Infrastructure.AreaCrawling;
+using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.AreaService.ViewModels;
+using NetModular.Module.Common.Domain.Area;
+using NetModular.Module.Common.Domain.Area.Models;
+using NetModular.Module.Common.Infrastructure.AreaCrawling;
 
-namespace Nm.Module.Common.Application.AreaService
+namespace NetModular.Module.Common.Application.AreaService
 {
     /// <summary>
     /// 区划代码服务

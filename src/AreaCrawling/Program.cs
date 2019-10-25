@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Nm.Lib.Host.Generic;
-using Nm.Module.Common.Infrastructure.AreaCrawling;
+using NetModular.Lib.Host.Generic;
+using NetModular.Module.Common.Infrastructure.AreaCrawling;
 using IHostEnvironment = Microsoft.Extensions.Hosting.IHostEnvironment;
 
-namespace Nm.Module.Common.AreaCrawling
+namespace NetModular.Module.Common.AreaCrawling
 {
     class Program
     {

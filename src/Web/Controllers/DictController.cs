@@ -3,12 +3,12 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Nm.Lib.Utils.Core.Result;
-using Nm.Module.Common.Application.DictService;
-using Nm.Module.Common.Application.DictService.ViewModels;
-using Nm.Module.Common.Domain.Dict.Models;
+using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.DictService;
+using NetModular.Module.Common.Application.DictService.ViewModels;
+using NetModular.Module.Common.Domain.Dict.Models;
 
-namespace Nm.Module.Common.Web.Controllers
+namespace NetModular.Module.Common.Web.Controllers
 {
     [Description("字典管理")]
     public class DictController : ModuleController

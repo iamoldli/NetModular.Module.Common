@@ -1,6 +1,6 @@
-using Nm.Lib.Data.Abstractions;
+using NetModular.Lib.Data.Abstractions;
 
-namespace Nm.Module.Common.Infrastructure.Repositories.SQLite
+namespace NetModular.Module.Common.Infrastructure.Repositories.SQLite
 {
     public class AreaRepository : SqlServer.AreaRepository
     {

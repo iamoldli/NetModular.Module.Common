@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Nm.Lib.Utils.Core.Result;
-using Nm.Module.Common.Application.MediaTypeService.ViewModels;
-using Nm.Module.Common.Domain.MediaType;
-using Nm.Module.Common.Domain.MediaType.Models;
+using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.MediaTypeService.ViewModels;
+using NetModular.Module.Common.Domain.MediaType;
+using NetModular.Module.Common.Domain.MediaType.Models;
 
-namespace Nm.Module.Common.Application.MediaTypeService
+namespace NetModular.Module.Common.Application.MediaTypeService
 {
     public class MediaTypeService : IMediaTypeService
     {

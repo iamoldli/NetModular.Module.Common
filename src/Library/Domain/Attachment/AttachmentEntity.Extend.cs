@@ -1,4 +1,4 @@
-namespace Nm.Module.Common.Domain.Attachment
+namespace NetModular.Module.Common.Domain.Attachment
 {
     public partial class AttachmentEntity
     {

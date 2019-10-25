@@ -1,4 +1,4 @@
-﻿namespace Nm.Module.Common.Infrastructure
+﻿namespace NetModular.Module.Common.Infrastructure
 {
     /// <summary>
     /// 缓存键

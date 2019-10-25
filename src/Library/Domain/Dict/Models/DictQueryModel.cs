@@ -1,7 +1,7 @@
 using System;
-using  Nm.Lib.Data.Query;
+using  NetModular.Lib.Data.Query;
 
-namespace  Nm.Module.Common.Domain.Dict.Models
+namespace  NetModular.Module.Common.Domain.Dict.Models
 {
     public class DictQueryModel : QueryModel
     {

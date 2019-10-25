@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nm.Lib.Data.Abstractions;
-using Nm.Module.Common.Domain.MediaType.Models;
+using NetModular.Lib.Data.Abstractions;
+using NetModular.Module.Common.Domain.MediaType.Models;
 
-namespace Nm.Module.Common.Domain.MediaType
+namespace NetModular.Module.Common.Domain.MediaType
 {
     /// <summary>
     /// 多媒体类型仓储接口

@@ -10,9 +10,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
-    <PackageReference Include="Nm.Lib.Cache.Abstractions" Version="1.4.0" />
-    <PackageReference Include="Nm.Lib.Data.MySql" Version="1.4.0" />
-    <PackageReference Include="Nm.Lib.Host.Generic" Version="1.4.0" />
+    <PackageReference Include="NetModular.Lib.Cache.Abstractions" Version="1.4.1" />
+    <PackageReference Include="NetModular.Lib.Data.MySql" Version="1.4.1" />
+    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.4.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.6.0" />
   </ItemGroup>
 

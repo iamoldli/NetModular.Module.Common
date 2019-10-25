@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Nm.Module.Common.Infrastructure.AreaCrawling
+namespace NetModular.Module.Common.Infrastructure.AreaCrawling
 {
     /// <summary>
     /// 区域模型

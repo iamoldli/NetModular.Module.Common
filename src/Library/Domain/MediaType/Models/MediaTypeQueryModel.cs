@@ -1,6 +1,6 @@
-﻿using Nm.Lib.Data.Query;
+﻿using NetModular.Lib.Data.Query;
 
-namespace Nm.Module.Common.Domain.MediaType.Models
+namespace NetModular.Module.Common.Domain.MediaType.Models
 {
     public class MediaTypeQueryModel : QueryModel
     {
