@@ -9,7 +9,7 @@
   </section>
 </template>
 <script>
-import { assist } from 'nm-lib-utils'
+import assist from 'netmodular-ui/packages/utils/assist'
 import Item from './item'
 // 默认值
 const defaultValue = {
