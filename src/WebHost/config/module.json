@@ -13,6 +13,8 @@
   //通用模块
   "Common": {
     //附件上传路径
-    "AttachmentPath": ""
+    "AttachmentPath": "",
+    //字典缓存是否启用
+    "DictCacheEnabled": true
   }
 }

@@ -97,7 +97,6 @@ namespace NetModular.Module.Common.Application.AreaService
 
             if (await _repository.UpdateAsync(entity))
             {
-                //�������
                 await ClearCache(entity);
             }
 
@@ -120,7 +119,6 @@ namespace NetModular.Module.Common.Application.AreaService
             return ResultModel.Success();
         }
 
-        //������ȡ������
         private async Task CrawlingInsert(AreaEntity entity, List<AreaCrawlingModel> children, IUnitOfWork uow)
         {
             if (await _repository.AddAsync(entity, uow))
@@ -158,11 +156,6 @@ namespace NetModular.Module.Common.Application.AreaService
             return result.Success(list);
         }
 
-        /// <summary>
-        /// �������
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
         private async Task ClearCache(AreaEntity entity)
         {
             if (entity.ParentId > 0)

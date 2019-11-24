@@ -32,9 +32,7 @@ export default {
       default: false
     },
     /** 上传前函数 */
-    beforeUpload: {
-      type: Function
-    },
+    beforeUpload: Function,
     /** 接受上传的文件类型 */
     accept: String,
     /** 文件最大大小 */
@@ -47,7 +45,9 @@ export default {
     /** 可接受文件类型 */
     fileType: {
       type: Array
-    }
+    },
+    //禁用
+    disabled: Boolean
   },
   computed: {
     ...mapState('app/token', ['accessToken']),

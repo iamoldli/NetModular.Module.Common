@@ -14,7 +14,7 @@
             :expand-on-click-node="false"
             :current-node-key="0"
             :default-expanded-keys="[0]"
-            :props="{isLeaf:'leaf'}"
+            :props="{ isLeaf: 'leaf' }"
             @current-change="onSelectChange"
           ></el-tree>
         </nm-box>
@@ -34,7 +34,7 @@
           </template>
 
           <!--操作列-->
-          <template v-slot:col-operation="{row}">
+          <template v-slot:col-operation="{ row }">
             <nm-button v-bind="buttons.edit" @click="edit(row)" />
             <nm-button-delete v-bind="buttons.del" :action="removeAction" :id="row.id" @success="refresh" />
           </template>
@@ -127,9 +127,15 @@ export default {
      * 获取节点的完整路径
      */
     getFullPath(node) {
-      if (node.parent === null || node.data.id === 0) { return '' }
+      if (node.parent === null || node.data.id === 0) {
+        return ''
+      }
       const parentPath = this.getFullPath(node.parent)
-      if (parentPath === '') { return node.data.label } else { return parentPath + ' / ' + node.data.label }
+      if (parentPath === '') {
+        return node.data.label
+      } else {
+        return parentPath + ' / ' + node.data.label
+      }
     }
   }
 }

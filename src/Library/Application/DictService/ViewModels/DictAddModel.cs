@@ -1,4 +1,4 @@
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NetModular.Module.Common.Application.DictService.ViewModels
 {
@@ -8,24 +8,27 @@ namespace NetModular.Module.Common.Application.DictService.ViewModels
     public class DictAddModel
     {
         /// <summary>
-        /// 父节点
+        /// 分组
         /// </summary>
-        public Guid ParentId { get; set; }
-
-        /// <summary>
-        /// 排序
-        /// </summary>
-        public int Sort { get; set; }
+        [Required(ErrorMessage = "请选择分组")]
+        public string GroupCode { get; set; }
 
         /// <summary>
         /// 名称
         /// </summary>
+        [Required(ErrorMessage = "名称不能为空")]
         public string Name { get; set; }
 
         /// <summary>
-        /// 值
+        /// 编码
         /// </summary>
-        public string Value { get; set; }
+        [Required(ErrorMessage = "编码不能为空")]
+        public string Code { get; set; }
 
+        /// <summary>
+        /// 排序
+        /// </summary>
+        [Required(ErrorMessage = "序号不能为空")]
+        public int Sort { get; set; }
     }
 }

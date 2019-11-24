@@ -2,16 +2,19 @@ export default [
   {
     name: 'id',
     label: '编号',
-    width: 250,
     show: false
+  },
+  {
+    name: 'groupName',
+    label: '分组'
   },
   {
     name: 'name',
     label: '名称'
   },
   {
-    name: 'value',
-    label: '值'
+    name: 'code',
+    label: '编码'
   },
   {
     name: 'sort',

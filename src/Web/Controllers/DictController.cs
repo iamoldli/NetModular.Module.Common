@@ -1,8 +1,8 @@
-using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using NetModular.Lib.Auth.Web.Attributes;
 using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictService;
 using NetModular.Module.Common.Application.DictService.ViewModels;
@@ -36,16 +36,16 @@ namespace NetModular.Module.Common.Web.Controllers
 
         [HttpDelete]
         [Description("删除")]
-        public async Task<IResultModel> Delete([BindRequired] Guid id)
+        public Task<IResultModel> Delete([BindRequired]int id)
         {
-            return await _service.Delete(id);
+            return _service.Delete(id);
         }
 
         [HttpGet]
         [Description("编辑")]
-        public async Task<IResultModel> Edit([BindRequired] Guid id)
+        public Task<IResultModel> Edit([BindRequired]int id)
         {
-            return await _service.Edit(id);
+            return _service.Edit(id);
         }
 
         [HttpPost]
@@ -53,6 +53,22 @@ namespace NetModular.Module.Common.Web.Controllers
         public Task<IResultModel> Update(DictUpdateModel model)
         {
             return _service.Update(model);
+        }
+
+        [HttpGet]
+        [Description("下拉列表")]
+        [Common]
+        public Task<IResultModel> Select(string group, string code)
+        {
+            return _service.Select(group, code);
+        }
+
+        [HttpGet]
+        [Description("树列表")]
+        [Common]
+        public Task<IResultModel> Tree(string group, string code)
+        {
+            return _service.Tree(group, code);
         }
     }
 }

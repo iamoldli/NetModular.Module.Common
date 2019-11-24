@@ -18,11 +18,7 @@ export default name => {
 
   // 预览
   const preview = id => {
-    return $http.get(
-      urls.download + id,
-      {},
-      { responseType: 'blob', preview: true }
-    )
+    return $http.get(urls.download + id, {}, { responseType: 'blob', headers: { preview: true } })
   }
 
   return {

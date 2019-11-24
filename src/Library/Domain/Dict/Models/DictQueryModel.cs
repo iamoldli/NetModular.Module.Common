@@ -1,18 +1,22 @@
-using System;
-using  NetModular.Lib.Data.Query;
+using NetModular.Lib.Data.Query;
 
-namespace  NetModular.Module.Common.Domain.Dict.Models
+namespace NetModular.Module.Common.Domain.Dict.Models
 {
     public class DictQueryModel : QueryModel
     {
         /// <summary>
-        /// 父节点
+        /// 分组编码
         /// </summary>
-        public Guid ParentId { get; set; }
+        public string GroupCode { get; set; }
 
         /// <summary>
         /// 名称
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// 编码
+        /// </summary>
+        public string Code { get; set; }
     }
 }

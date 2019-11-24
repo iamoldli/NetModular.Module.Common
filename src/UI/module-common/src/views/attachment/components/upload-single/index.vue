@@ -1,7 +1,7 @@
 <template>
   <div class="nm-attachment-upload-single">
     <div class="input">
-      <el-input :value="fileName" readonly />
+      <el-input :value="fileName" readonly :disabled="disabled" />
     </div>
     <div class="button">
       <el-upload ref="upload" v-bind="uploadOptions">
@@ -29,7 +29,7 @@ export default {
       type: String,
       default: 'primary'
     },
-    /** 不显示按钮 */
+    /** 不显示按钮图标 */
     noIcon: Boolean
   },
   computed: {
@@ -51,7 +51,8 @@ export default {
         showFileList: false,
         beforeUpload: this.onBeforeUpload,
         onSuccess: this.onSuccess,
-        onError: this.onError
+        onError: this.onError,
+        disabled: this.disabled
       }
     },
     icon_() {
@@ -94,7 +95,9 @@ export default {
       this.$emit('input', this.id)
     },
     onClick() {
-      if (this.loading) { return }
+      if (this.loading) {
+        return
+      }
       this.$refs.upload.clearFiles()
     }
   },

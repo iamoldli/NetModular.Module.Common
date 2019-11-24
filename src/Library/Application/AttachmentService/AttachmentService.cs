@@ -45,8 +45,9 @@ namespace NetModular.Module.Common.Application.AttachmentService
             };
             return ResultModel.Success(result);
         }
+
         /// <summary>
-        /// ɾ��
+        /// 删除
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -92,7 +93,6 @@ namespace NetModular.Module.Common.Application.AttachmentService
             {
                 if (await _repository.AddAsync(entity))
                 {
-                    //�����Ҫ��Ȩ���ʸ�������Ҫ����ӵ���߹�����Ϣ
                     var ownerEntity = new AttachmentOwnerEntity
                     {
                         AttachmentId = entity.Id,
@@ -109,7 +109,7 @@ namespace NetModular.Module.Common.Application.AttachmentService
                 }
             }
 
-            return result.Failed("�ϴ�ʧ��");
+            return result.Failed("上传失败");
         }
 
         public async Task<IResultModel<FileDownloadModel>> Download(Guid id, Guid accountId)
@@ -118,20 +118,20 @@ namespace NetModular.Module.Common.Application.AttachmentService
 
             var attachment = await _repository.GetAsync(id);
             if (attachment == null)
-                return result.Failed("����������");
+                return result.Failed("附件不存在");
 
             if (attachment.Auth)
             {
                 var has = await _ownerRepository.Exist(new AttachmentOwnerEntity { AccountId = accountId, AttachmentId = id });
                 if (!has)
                 {
-                    return result.Failed("����Ȩ���ʸø���");
+                    return result.Failed("无权访问");
                 }
             }
 
             var filePath = Path.Combine(_moduleCommonOptions.UploadPath, attachment.FullPath);
             if (!File.Exists(filePath))
-                return result.Failed("�ļ�������");
+                return result.Failed("附件不存在");
 
             return result.Success(new FileDownloadModel(filePath, attachment.FileName, attachment.MediaType));
         }

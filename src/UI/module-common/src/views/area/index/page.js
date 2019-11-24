@@ -1,15 +1,12 @@
 /** 页面信息 */
-const page = new function() {
+const page = new (function() {
   this.title = '区划代码管理'
   this.icon = 'area'
   this.name = 'common_area'
   this.path = '/common/area'
 
   // 关联权限
-  this.permissions = [
-    `${this.name}_query_get`,
-    `${this.name}_querychildren_get`
-  ]
+  this.permissions = [`${this.name}_query_get`, `${this.name}_querychildren_get`]
 
   this.buttons = {
     add: {
@@ -34,7 +31,7 @@ const page = new function() {
       permissions: [`${this.name}_delete_delete`]
     }
   }
-}()
+})()
 
 /** 路由信息 */
 export const route = {

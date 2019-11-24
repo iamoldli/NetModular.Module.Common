@@ -5,12 +5,10 @@
   </div>
 </template>
 <script>
-
 // 接口
 const api = $api.common.attachment
 
 export default {
-  name: '',
   data() {
     return {
       url: ''
@@ -25,6 +23,7 @@ export default {
     get() {
       if (this.id) {
         api.preview(this.id).then(url => {
+          console.log(url)
           this.url = url
         })
       } else {

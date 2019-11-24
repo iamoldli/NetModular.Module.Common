@@ -75,15 +75,9 @@ export default {
           areaCode: ''
         },
         rules: {
-          parentId: [
-            { required: true, message: '请选择父节点' }
-          ],
-          name: [
-            { required: true, message: '请输入名称' }
-          ],
-          code: [
-            { required: true, message: '请输入编码' }
-          ]
+          parentId: [{ required: true, message: '请选择父节点' }],
+          name: [{ required: true, message: '请输入名称' }],
+          code: [{ required: true, message: '请输入编码' }]
         }
       }
     }

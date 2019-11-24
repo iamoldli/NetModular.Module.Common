@@ -8,9 +8,7 @@ export default {
     return {
       props: {
         lazy: true,
-        lazyLoad(node, resolve) {
-
-        }
+        lazyLoad() {}
       }
     }
   }

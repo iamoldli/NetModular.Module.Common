@@ -1,26 +1,36 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Options;
 using NetModular.Lib.Cache.Abstractions;
+using NetModular.Lib.Utils.Core.Extensions;
 using NetModular.Lib.Utils.Core.Result;
+using NetModular.Module.Common.Application.DictItemService.ResultModels;
 using NetModular.Module.Common.Application.DictService.ViewModels;
 using NetModular.Module.Common.Domain.Dict;
 using NetModular.Module.Common.Domain.Dict.Models;
+using NetModular.Module.Common.Domain.DictItem;
+using NetModular.Module.Common.Infrastructure;
+using NetModular.Module.Common.Infrastructure.Options;
 
 namespace NetModular.Module.Common.Application.DictService
 {
     public class DictService : IDictService
     {
-        private const string DictCacheKey = "COMMON_Dict_";
-        private readonly ICacheHandler _cache;
         private readonly IMapper _mapper;
         private readonly IDictRepository _repository;
+        private readonly IDictItemRepository _itemRepository;
+        private readonly CommonOptions _options;
+        private readonly ICacheHandler _cacheHandler;
 
-        public DictService(IMapper mapper, IDictRepository repository, ICacheHandler cache)
+        public DictService(IMapper mapper, IDictRepository repository, IOptionsMonitor<CommonOptions> optionsMonitor, ICacheHandler cacheHandler, IDictItemRepository itemRepository)
         {
             _mapper = mapper;
             _repository = repository;
-            _cache = cache;
+            _cacheHandler = cacheHandler;
+            _itemRepository = itemRepository;
+            _options = optionsMonitor.CurrentValue;
         }
 
         public async Task<IResultModel> Query(DictQueryModel model)
@@ -36,22 +46,33 @@ namespace NetModular.Module.Common.Application.DictService
         public async Task<IResultModel> Add(DictAddModel model)
         {
             var entity = _mapper.Map<DictEntity>(model);
-            //if (await _repository.Exists(entity))
-            //{
-                //return ResultModel.HasExists;
-            //}
+            if (await _repository.Exists(entity))
+            {
+                return ResultModel.HasExists;
+            }
 
             var result = await _repository.AddAsync(entity);
-            return ResultModel.Result(result);
+            return ResultModel.Success(result);
         }
 
-        public async Task<IResultModel> Delete(Guid id)
+        public async Task<IResultModel> Delete(int id)
         {
+            var entity = await _repository.GetAsync(id);
+            if (entity == null)
+                return ResultModel.NotExists;
+
+            if (await _itemRepository.ExistsDict(entity.GroupCode, entity.Code))
+                return ResultModel.Failed("请先删除关联的数据项");
+
             var result = await _repository.DeleteAsync(id);
+            if (result)
+            {
+                await _cacheHandler.RemoveAsync($"{CacheKeys.DictSelect}{entity.GroupCode.ToUpper()}_{entity.Code.ToUpper()}");
+            }
             return ResultModel.Result(result);
         }
 
-        public async Task<IResultModel> Edit(Guid id)
+        public async Task<IResultModel> Edit(int id)
         {
             var entity = await _repository.GetAsync(id);
             if (entity == null)
@@ -69,19 +90,122 @@ namespace NetModular.Module.Common.Application.DictService
 
             _mapper.Map(model, entity);
 
-            //if (await _repository.Exists(entity))
-            //{
-                //return ResultModel.HasExists;
-            //}
+            if (await _repository.Exists(entity))
+            {
+                return ResultModel.HasExists;
+            }
 
             var result = await _repository.UpdateAsync(entity);
-
+            if (result)
+            {
+                await _cacheHandler.RemoveAsync($"{CacheKeys.DictSelect}{entity.GroupCode.ToUpper()}_{entity.Code.ToUpper()}");
+            }
             return ResultModel.Result(result);
         }
 
-        public Task<IResultModel> QueryChildren(int parentId)
+        public async Task<IResultModel> Select(string group, string code)
         {
-            throw new NotImplementedException();
+            if (group.IsNull() || code.IsNull())
+                return ResultModel.Failed("请指定分组和编码");
+
+            List<OptionResultModel> result;
+            var key = string.Format(CacheKeys.DictSelect, group.ToUpper(), code.ToUpper());
+            if (_options.DictCacheEnabled)
+            {
+                result = await _cacheHandler.GetAsync<List<OptionResultModel>>(key);
+                if (result != null)
+                    return ResultModel.Success(result);
+            }
+
+            var list = await _itemRepository.QueryChildren(group, code);
+            result = list.Select(m => new OptionResultModel
+            {
+                Label = m.Name,
+                Value = m.Id,
+                Data = new
+                {
+                    m.Id,
+                    m.Name,
+                    m.Value,
+                    m.Extend,
+                    m.Icon,
+                    m.Level
+                }
+            }).ToList();
+
+            if (_options.DictCacheEnabled)
+            {
+                await _cacheHandler.SetAsync(key, result);
+            }
+
+            return ResultModel.Success(result);
+        }
+
+        public async Task<IResultModel> Tree(string group, string code)
+        {
+            if (group.IsNull() || code.IsNull())
+                return ResultModel.Failed("请指定分组和编码");
+
+            TreeResultModel<DictItemTreeResultModel> tree;
+            var key = string.Format(CacheKeys.DictTree, group.ToUpper(), code.ToUpper());
+            if (_options.DictCacheEnabled)
+            {
+                tree = await _cacheHandler.GetAsync<TreeResultModel<DictItemTreeResultModel>>(key);
+                if (tree != null)
+                    return ResultModel.Success(tree);
+            }
+
+            var dict = await _repository.GetByCode(group, code);
+            if (dict == null)
+                return ResultModel.Failed("字典不存在");
+
+            tree = new TreeResultModel<DictItemTreeResultModel>
+            {
+                Id = 0,
+                Label = dict.Name,
+                Path = { dict.Name },
+                Item = new DictItemTreeResultModel()
+            };
+            tree.Item.IdList.Add(0);
+            var list = await _itemRepository.QueryAll(group, code);
+            tree.Children = ResolveTree(list, tree);
+
+            if (_options.DictCacheEnabled)
+            {
+                await _cacheHandler.SetAsync(key, tree);
+            }
+
+            return ResultModel.Success(tree);
+        }
+
+        private List<TreeResultModel<DictItemTreeResultModel>> ResolveTree(IList<DictItemEntity> all, TreeResultModel<DictItemTreeResultModel> parent)
+        {
+            return all.Where(m => m.ParentId == parent.Id).OrderBy(m => m.Sort).Select(m =>
+            {
+                var node = new TreeResultModel<DictItemTreeResultModel>
+                {
+                    Id = m.Id,
+                    Label = m.Name,
+                    Item = new DictItemTreeResultModel
+                    {
+                        Id = m.Id,
+                        Name = m.Name,
+                        Extend = m.Extend,
+                        Icon = m.Icon,
+                        Level = m.Level,
+                        ParentId = m.ParentId,
+                        Sort = m.Sort,
+                        Value = m.Value
+                    }
+                };
+                node.Item.IdList.AddRange(parent.Item.IdList);
+                node.Item.IdList.Add(m.Id);
+
+                node.Path.AddRange(parent.Path);
+                node.Path.Add(node.Label);
+                node.Children = ResolveTree(all, node);
+                return node;
+            }).ToList();
         }
     }
 }

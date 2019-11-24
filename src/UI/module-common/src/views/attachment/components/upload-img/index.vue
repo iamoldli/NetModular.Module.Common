@@ -3,7 +3,7 @@
     <el-upload v-bind="uploadOptions">
       <nm-attachment-img v-show="id" :id="id" class="preview" />
       <div v-show="!id" class="text-box">
-        <i class="el-icon-upload" :style="{fontSize:iconSize}"></i>
+        <i class="el-icon-upload" :style="{ fontSize: iconSize }"></i>
         <div class="text">
           <slot name="text">
             将文件拖到此处，或
@@ -11,7 +11,7 @@
           </slot>
         </div>
         <div class="tip">
-          <slot name="tip">{{tip}}</slot>
+          <slot name="tip">{{ tip }}</slot>
         </div>
       </div>
     </el-upload>
@@ -80,7 +80,8 @@ export default {
         showFileList: false,
         beforeUpload: this.onBeforeUpload,
         onSuccess: this.onSuccess,
-        onError: this.onError
+        onError: this.onError,
+        disabled: this.disabled
       }
     },
     style() {
@@ -179,6 +180,11 @@ export default {
       em {
         color: #409eff;
         font-style: normal;
+      }
+
+      .text {
+        font-size: 13px;
+        line-height: 130%;
       }
     }
   }

@@ -16,5 +16,19 @@ namespace NetModular.Module.Common.Domain.Dict
         /// <param name="model"></param>
         /// <returns></returns>
         Task<IList<DictEntity>> Query(DictQueryModel model);
+
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> Exists(DictEntity entity);
+
+        /// <summary>
+        /// 根据编码查询
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<DictEntity> GetByCode(string group, string code);
     }
 }

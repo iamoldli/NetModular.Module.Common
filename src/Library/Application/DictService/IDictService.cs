@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictService.ViewModels;
@@ -30,14 +29,14 @@ namespace NetModular.Module.Common.Application.DictService
         /// </summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
-        Task<IResultModel> Delete(Guid id);
+        Task<IResultModel> Delete(int id);
 
         /// <summary>
         /// 编辑
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IResultModel> Edit(Guid id);
+        Task<IResultModel> Edit(int id);
 
         /// <summary>
         /// 修改
@@ -47,10 +46,19 @@ namespace NetModular.Module.Common.Application.DictService
         Task<IResultModel> Update(DictUpdateModel model);
 
         /// <summary>
-        /// 查询子节点
+        /// 下拉列表
         /// </summary>
-        /// <param name="parentId"></param>
+        /// <param name="group"></param>
+        /// <param name="code"></param>
         /// <returns></returns>
-        Task<IResultModel> QueryChildren(int parentId);
+        Task<IResultModel> Select(string group, string code);
+
+        /// <summary>
+        /// 查询字典树
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<IResultModel> Tree(string group, string code);
     }
 }

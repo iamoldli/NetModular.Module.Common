@@ -73,6 +73,7 @@ namespace NetModular.Module.Common.Domain.Attachment
         /// 多媒体类型
         /// </summary>
         [Length(100)]
+        [Nullable]
         public string MediaType { get; set; }
     }
 }
