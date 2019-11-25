@@ -37,6 +37,7 @@ export default {
     return {
       data: null,
       title: '',
+      label: '',
       tree: {
         data: null,
         nodeKey: 'id',
@@ -100,17 +101,14 @@ export default {
     }
   },
   computed: {
-    label() {
-      return this.selection.map(m => m.name).join(this.separator)
-    },
     value_() {
       if (this.multiple) {
-        return this.selection.map(m => m.id)
+        return this.selection.map(m => m.value)
       } else {
         if (this.selection.length > 0) {
-          return this.selection[0].id
+          return this.selection[0].value
         } else {
-          return 0
+          return ''
         }
       }
     },
@@ -134,7 +132,7 @@ export default {
         this.data = data.children
         this.tree.data = this.data
         this.title = data.label
-        this.onChange()
+        this.onChange(true)
       })
     },
     //递归获取当前节点
@@ -153,9 +151,9 @@ export default {
       return null
     },
     setCheckedKeys(keys) {
-      this.$refs.tree.setCheckedKeys(keys || this.selection.map(m => m.id))
+      this.$refs.tree.setCheckedKeys(keys || this.selection.map(m => m.value))
     },
-    onChange() {
+    onChange(refreshLabel) {
       this.selection = []
       let defaultExpandedKeys = []
       if (this.multiple) {
@@ -176,6 +174,11 @@ export default {
         }
       }
       this.tree.defaultExpandedKeys = defaultExpandedKeys
+
+      //刷新label
+      if (refreshLabel) {
+        this.label = this.selection.map(m => m.name).join(this.separator)
+      }
       this.$nextTick(() => {
         this.setCheckedKeys()
         this.$emit('change', this.value_, this.selection_)
@@ -239,6 +242,7 @@ export default {
       }
     },
     onSave() {
+      this.label = this.selection.map(m => m.name).join(this.separator)
       this.$emit('input', this.value_)
       this.$emit('change', this.value_, this.selection_)
       this.actived = false
@@ -261,7 +265,7 @@ export default {
   },
   watch: {
     value(val) {
-      if (val !== this.value_) this.onChange()
+      if (val !== this.value_) this.onChange(true)
     },
     keyword(val) {
       if (this.filterable) {

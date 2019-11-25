@@ -121,7 +121,7 @@ namespace NetModular.Module.Common.Application.DictService
             result = list.Select(m => new OptionResultModel
             {
                 Label = m.Name,
-                Value = m.Id,
+                Value = m.Value,
                 Data = new
                 {
                     m.Id,
@@ -146,11 +146,11 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
-            TreeResultModel<DictItemTreeResultModel> tree;
+            TreeResultModel<string, DictItemTreeResultModel> tree;
             var key = string.Format(CacheKeys.DictTree, group.ToUpper(), code.ToUpper());
             if (_options.DictCacheEnabled)
             {
-                tree = await _cacheHandler.GetAsync<TreeResultModel<DictItemTreeResultModel>>(key);
+                tree = await _cacheHandler.GetAsync<TreeResultModel<string, DictItemTreeResultModel>>(key);
                 if (tree != null)
                     return ResultModel.Success(tree);
             }
@@ -159,14 +159,13 @@ namespace NetModular.Module.Common.Application.DictService
             if (dict == null)
                 return ResultModel.Failed("字典不存在");
 
-            tree = new TreeResultModel<DictItemTreeResultModel>
+            tree = new TreeResultModel<string, DictItemTreeResultModel>
             {
-                Id = 0,
+                Id = "",
                 Label = dict.Name,
                 Path = { dict.Name },
                 Item = new DictItemTreeResultModel()
             };
-            tree.Item.IdList.Add(0);
             var list = await _itemRepository.QueryAll(group, code);
             tree.Children = ResolveTree(list, tree);
 
@@ -178,13 +177,13 @@ namespace NetModular.Module.Common.Application.DictService
             return ResultModel.Success(tree);
         }
 
-        private List<TreeResultModel<DictItemTreeResultModel>> ResolveTree(IList<DictItemEntity> all, TreeResultModel<DictItemTreeResultModel> parent)
+        private List<TreeResultModel<string, DictItemTreeResultModel>> ResolveTree(IList<DictItemEntity> all, TreeResultModel<string, DictItemTreeResultModel> parent)
         {
-            return all.Where(m => m.ParentId == parent.Id).OrderBy(m => m.Sort).Select(m =>
+            return all.Where(m => m.ParentId == parent.Item.Id).OrderBy(m => m.Sort).Select(m =>
             {
-                var node = new TreeResultModel<DictItemTreeResultModel>
+                var node = new TreeResultModel<string, DictItemTreeResultModel>
                 {
-                    Id = m.Id,
+                    Id = m.Value,
                     Label = m.Name,
                     Item = new DictItemTreeResultModel
                     {
@@ -199,7 +198,7 @@ namespace NetModular.Module.Common.Application.DictService
                     }
                 };
                 node.Item.IdList.AddRange(parent.Item.IdList);
-                node.Item.IdList.Add(m.Id);
+                node.Item.IdList.Add(m.Value);
 
                 node.Path.AddRange(parent.Path);
                 node.Path.Add(node.Label);

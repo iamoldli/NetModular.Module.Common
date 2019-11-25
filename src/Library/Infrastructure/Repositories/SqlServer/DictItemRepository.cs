@@ -44,15 +44,10 @@ namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
             return query.ToListAsync();
         }
 
-        public Task<bool> ExistsName(DictItemEntity entity)
+        public Task<bool> Exists(DictItemEntity entity)
         {
-            return Db.Find(m => m.GroupCode == entity.GroupCode && m.DictCode == entity.DictCode && m.Name == entity.Name && m.ParentId == entity.ParentId)
-                .WhereNotNull(entity.Id > 0, m => m.Id != entity.Id).ExistsAsync();
-        }
-
-        public Task<bool> ExistsValue(DictItemEntity entity)
-        {
-            return Db.Find(m => m.GroupCode == entity.GroupCode && m.DictCode == entity.DictCode && m.Value == entity.Value && m.ParentId == entity.ParentId)
+            return Db.Find(m => m.GroupCode == entity.GroupCode && m.DictCode == entity.DictCode)
+                .Where(m => m.Name == entity.Name || m.Value == entity.Value)
                 .WhereNotNull(entity.Id > 0, m => m.Id != entity.Id).ExistsAsync();
         }
 

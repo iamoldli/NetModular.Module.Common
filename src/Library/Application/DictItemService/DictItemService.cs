@@ -57,14 +57,9 @@ namespace NetModular.Module.Common.Application.DictItemService
                 entity.Level = ++parent.Level;
             }
 
-            if (await _repository.ExistsName(entity))
+            if (await _repository.Exists(entity))
             {
-                return ResultModel.Failed("数据项名称已存在");
-            }
-
-            if (await _repository.ExistsValue(entity))
-            {
-                return ResultModel.Failed("值已存在");
+                return ResultModel.Failed("数据项名称或值已存在");
             }
 
             var result = await _repository.AddAsync(entity);
@@ -112,14 +107,9 @@ namespace NetModular.Module.Common.Application.DictItemService
 
             _mapper.Map(model, entity);
 
-            if (await _repository.ExistsName(entity))
+            if (await _repository.Exists(entity))
             {
-                return ResultModel.Failed("数据项名称已存在");
-            }
-
-            if (await _repository.ExistsValue(entity))
-            {
-                return ResultModel.Failed("值已存在");
+                return ResultModel.Failed("数据项名称或值已存在");
             }
 
             var result = await _repository.UpdateAsync(entity);

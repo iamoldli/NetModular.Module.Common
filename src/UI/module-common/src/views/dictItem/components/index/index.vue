@@ -84,13 +84,11 @@ export default {
       this.refresh()
     },
     onDelete(row) {
-      this.$emit('del-success', row.id)
+      this.$emit('del-success', row.value)
       this.refresh()
     },
-    onEdit(model, data) {
-      console.log(model)
-      console.log(data)
-      this.$emit('edit-success', { id: model.id, label: model.name, item: Object.assign({}, model) })
+    onEdit(model) {
+      this.$emit('edit-success', { id: model.value, label: model.name, item: Object.assign({}, model) })
       this.refresh()
     }
   },

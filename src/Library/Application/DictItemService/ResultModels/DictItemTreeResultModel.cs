@@ -42,8 +42,8 @@ namespace NetModular.Module.Common.Application.DictItemService.ResultModels
         public int Level { get; set; }
 
         /// <summary>
-        /// 编号集合
+        /// 值集合
         /// </summary>
-        public List<int> IdList { get; } = new List<int>();
+        public List<string> IdList { get; } = new List<string>();
     }
 }

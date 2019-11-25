@@ -74,7 +74,7 @@ export default {
   methods: {
     onSuccess(id) {
       this.form.model.id = id
-      this.$emit('success', { id, label: this.form.model.name, item: Object.assign({}, this.form.model) })
+      this.$emit('success', { id: this.form.model.value, label: this.form.model.name, item: Object.assign({}, this.form.model) })
     },
     onOpen() {
       this.$nextTick(() => {

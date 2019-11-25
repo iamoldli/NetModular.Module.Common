@@ -35,13 +35,13 @@ export default {
   },
   methods: {
     onTreeChange(selection) {
-      this.parentId = selection.id
+      this.parentId = selection.item.id
     },
     onAdd(model) {
       this.$refs.tree.insert(model)
     },
-    onDelete(id) {
-      this.$refs.tree.remove(id)
+    onDelete(value) {
+      this.$refs.tree.remove(value)
     },
     onEdit(model) {
       this.$refs.tree.update(model)

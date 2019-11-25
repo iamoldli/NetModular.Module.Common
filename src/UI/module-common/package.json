@@ -1,6 +1,6 @@
 {
   "name": "netmodular-module-common",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "code": "common",
   "title": "通用模块",
   "description": "通用模块",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "netmodular-module-admin": "^1.0.6",
-    "netmodular-ui": "^1.1.13"
+    "netmodular-ui": "^1.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",

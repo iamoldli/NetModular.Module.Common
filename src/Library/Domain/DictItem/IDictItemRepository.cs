@@ -23,18 +23,11 @@ namespace NetModular.Module.Common.Domain.DictItem
         Task<IList<DictItemEntity>> QueryAll(string groupCode, string dictCode);
 
         /// <summary>
-        /// 名称是否存在
+        /// 是否存在
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<bool> ExistsName(DictItemEntity entity);
-
-        /// <summary>
-        /// 值是否存在
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        Task<bool> ExistsValue(DictItemEntity entity);
+        Task<bool> Exists(DictItemEntity entity);
 
         /// <summary>
         /// 是否存在指定字典的项

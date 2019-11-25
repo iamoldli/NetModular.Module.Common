@@ -18,12 +18,12 @@ export default {
         nodeKey: 'id',
         highlightCurrent: true,
         props: { children: 'children', label: 'label' },
-        currentNodeKey: 0,
+        currentNodeKey: '',
         expandOnClickNode: false,
-        defaultExpandedKeys: [0]
+        defaultExpandedKeys: ['']
       },
       on: {
-        'current-change': this.onSelectChange,
+        'current-change': this.onChange,
         'node-expand': this.onNodeExpand,
         'node-collapse': this.onNodeCollapse
       },
@@ -41,18 +41,17 @@ export default {
         this.tree.data = [data]
         if (init) {
           //初始化触发一次change事件
-          this.onSelectChange(data)
+          this.onChange(data)
         } else {
-          //刷新要保留当前点击节点
+          //刷新要保留当前选中节点
           this.$nextTick(() => {
             this.$refs.tree.setCurrentKey(this.tree.currentNodeKey)
           })
         }
       })
     },
-    onSelectChange(data) {
+    onChange(data) {
       if (this.selection === data) return
-
       this.tree.currentNodeKey = data.id
       this.selection = data
       this.$emit('change', this.selection)
@@ -93,6 +92,7 @@ export default {
     },
     /**删除 */
     remove(id) {
+      console.log(id)
       let children = this.selection.children
       for (let i = 0; i < children.length; i++) {
         let child = children[i]
