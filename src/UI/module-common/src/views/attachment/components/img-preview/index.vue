@@ -1,5 +1,5 @@
 <template>
-  <div class="nm-attachment-img-preview">
+  <div :style="{ width, height }" class="nm-attachment-img-preview">
     <img v-if="url" :src="url" />
     <nm-icon class="no-picture" v-else name="photo" />
   </div>
@@ -17,6 +17,14 @@ export default {
   props: {
     id: {
       type: String
+    },
+    width: {
+      type: String,
+      default: 'auto'
+    },
+    height: {
+      type: String,
+      default: 'auto'
     }
   },
   methods: {
@@ -44,5 +52,8 @@ export default {
 <style lang="scss">
 .nm-attachment-img-preview {
   display: block;
+  img {
+    width: 100%;
+  }
 }
 </style>
