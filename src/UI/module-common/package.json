@@ -17,8 +17,8 @@
     "pub": "cd ../../../script && npm_publish.ps1"
   },
   "dependencies": {
-    "netmodular-module-admin": "^1.0.6",
-    "netmodular-ui": "^1.2.0"
+    "netmodular-module-admin": "^1.0.9",
+    "netmodular-ui": "^1.2.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",
