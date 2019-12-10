@@ -136,6 +136,7 @@ export default {
   color: #8c939d;
   cursor: pointer;
   border-radius: 5px;
+  overflow: hidden;
 
   > div {
     width: 100%;
