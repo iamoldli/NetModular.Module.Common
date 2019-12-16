@@ -1,5 +1,6 @@
 <template>
-  <div class="nm-attachment-upload-img" :style="style" v-loading="loading">
+  <div :class="['nm-attachment-upload-img', disabled ? 'disabled' : '']" :style="style" v-loading="loading">
+    <div v-if="disabled" class="disabled-bg"></div>
     <el-upload v-bind="uploadOptions">
       <nm-attachment-img v-show="id" :id="id" class="preview" />
       <div v-show="!id" class="text-box">
@@ -217,6 +218,22 @@ export default {
     .remove {
       display: inline-block;
     }
+  }
+
+  &.disabled:hover {
+    border: 1px dashed #ccc;
+  }
+
+  .disabled-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f5f7fa;
+    z-index: 999;
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 </style>
