@@ -92,7 +92,6 @@ export default {
     },
     /**删除 */
     remove(id) {
-      console.log(id)
       let children = this.selection.children
       for (let i = 0; i < children.length; i++) {
         let child = children[i]

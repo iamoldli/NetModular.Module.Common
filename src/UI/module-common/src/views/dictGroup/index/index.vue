@@ -16,6 +16,10 @@
         <nm-button v-bind="buttons.add" @click="add(total)" />
       </template>
 
+      <template v-slot:col-icon="{ row }">
+        <nm-icon class="nm-size-20" :name="row.icon" />
+      </template>
+
       <!--操作列-->
       <template v-slot:col-operation="{ row }">
         <nm-button v-bind="buttons.edit" @click="edit(row)" />
@@ -23,27 +27,25 @@
       </template>
     </nm-list>
 
-    <!--添加-->
-    <add-page :total="total" :visible.sync="dialog.add" @success="refresh" />
     <!--编辑-->
-    <edit-page :id="curr.id" :visible.sync="dialog.edit" @success="refresh" />
+    <save-page :id="curr.id" :total="total" :visible.sync="dialog.save" @success="refresh" />
   </nm-container>
 </template>
 <script>
+import { mixins } from 'netmodular-ui'
 import page from './page'
 import cols from './cols'
-import AddPage from '../components/add'
-import EditPage from '../components/edit'
+import SavePage from '../components/save'
 
 // 接口
 const api = $api.common.dictGroup
 
 export default {
   name: page.name,
-  components: { AddPage, EditPage },
+  mixins: [mixins.list],
+  components: { SavePage },
   data() {
     return {
-      curr: { id: '' },
       list: {
         title: page.title,
         cols,
@@ -58,25 +60,7 @@ export default {
         }
       },
       removeAction: api.remove,
-      dialog: {
-        add: false,
-        edit: false
-      },
-      buttons: page.buttons,
-      total: 0
-    }
-  },
-  methods: {
-    refresh() {
-      this.$refs.list.refresh()
-    },
-    add(total) {
-      this.total = total
-      this.dialog.add = true
-    },
-    edit(row) {
-      this.curr = row
-      this.dialog.edit = true
+      buttons: page.buttons
     }
   }
 }

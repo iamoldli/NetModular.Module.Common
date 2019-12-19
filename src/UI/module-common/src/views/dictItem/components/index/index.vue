@@ -18,26 +18,21 @@
       <nm-button-delete type="text" icon="delete" :id="row.id" :action="removeAction" @success="onDelete(row)" />
     </template>
 
-    <!--添加-->
-    <add-page :total="total" :parent-id="parentId" :dict="dict" :visible.sync="dialog.add" @success="onAdd" />
-    <!--编辑-->
-    <edit-page :id="curr.id" :visible.sync="dialog.edit" @success="onEdit" />
+    <save-page :id="curr.id" :total="total" :parent-id="parentId" :dict="dict" :visible.sync="dialog.save" @success="onSave" />
   </nm-list>
 </template>
 <script>
 import { mixins } from 'netmodular-ui'
 import cols from './cols'
-import AddPage from '../add'
-import EditPage from '../edit'
+import SavePage from '../save'
 
 const api = $api.common.dictItem
 
 export default {
-  mixins: [mixins.dialog],
-  components: { AddPage, EditPage },
+  mixins: [mixins.list],
+  components: { SavePage },
   data() {
     return {
-      curr: { id: '' },
       list: {
         title: '数据项列表',
         cols,
@@ -50,12 +45,7 @@ export default {
           code: ''
         }
       },
-      removeAction: api.remove,
-      dialog: {
-        add: false,
-        edit: false
-      },
-      total: 0
+      removeAction: api.remove
     }
   },
   props: {
@@ -71,24 +61,16 @@ export default {
         this.$refs.list.refresh()
       })
     },
-    add(total) {
-      this.total = total
-      this.dialog.add = true
-    },
-    edit(row) {
-      this.curr = row
-      this.dialog.edit = true
-    },
-    onAdd(model) {
-      this.$emit('add-success', model)
+    onSave(isAdd, model) {
+      if (isAdd) {
+        this.$emit('add-success', model)
+      } else {
+        this.$emit('edit-success', model)
+      }
       this.refresh()
     },
     onDelete(row) {
       this.$emit('del-success', row.value)
-      this.refresh()
-    },
-    onEdit(model) {
-      this.$emit('edit-success', { id: model.value, label: model.name, item: Object.assign({}, model) })
       this.refresh()
     }
   },

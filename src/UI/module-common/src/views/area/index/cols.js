@@ -2,13 +2,11 @@ export default [
   {
     name: 'id',
     label: '编号',
-    width: 250,
     show: false
   },
   {
     name: 'code',
-    label: '编码',
-    width: 120
+    label: '编码'
   },
   {
     name: 'name',

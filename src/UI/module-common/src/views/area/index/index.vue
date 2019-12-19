@@ -41,28 +41,26 @@
         </nm-list>
       </template>
     </nm-split>
-    <!--添加-->
-    <add-page :parent-id="parent.id" :full-path="parent.fullPath" :visible.sync="dialog.add" @success="refresh" />
-    <!--编辑-->
-    <edit-page :id="curr.id" :full-path="parent.fullPath" :visible.sync="dialog.edit" @success="refresh" />
+
+    <save-page :id="curr.id" :parent="parent" :visible.sync="dialog.save" @success="refresh" />
   </nm-container>
 </template>
 <script>
+import { mixins } from 'netmodular-ui'
 import page from './page'
 import cols from './cols'
-import AddPage from '../components/add'
-import EditPage from '../components/edit'
+import SavePage from '../components/save'
 
 // 接口
 const api = $api.common.area
 
 export default {
   name: page.name,
-  components: { AddPage, EditPage },
+  mixins: [mixins.list],
+  components: { SavePage },
   data() {
     return {
       split: 0.2,
-      curr: { id: '' },
       list: {
         title: page.title,
         cols,
@@ -77,10 +75,6 @@ export default {
         loadingText: '正在努力加载数据，请稍后...'
       },
       removeAction: api.remove,
-      dialog: {
-        add: false,
-        edit: false
-      },
       buttons: page.buttons,
       tree: [],
       parent: {
@@ -106,16 +100,6 @@ export default {
         })
         resolve(children)
       }
-    },
-    refresh() {
-      this.$refs.list.refresh()
-    },
-    add() {
-      this.dialog.add = true
-    },
-    edit(row) {
-      this.curr = row
-      this.dialog.edit = true
     },
     onSelectChange(data, node) {
       this.parent.id = data.id

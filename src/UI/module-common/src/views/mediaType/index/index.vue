@@ -20,27 +20,25 @@
       </template>
     </nm-list>
 
-    <!--添加-->
-    <add-page :visible.sync="dialog.add" @success="refresh" />
     <!--编辑-->
-    <edit-page :id="curr.id" :visible.sync="dialog.edit" @success="refresh" />
+    <save-page :id="curr.id" :visible.sync="dialog.save" @success="refresh" />
   </nm-container>
 </template>
 <script>
+import { mixins } from 'netmodular-ui'
 import page from './page'
 import cols from './cols'
-import AddPage from '../components/add'
-import EditPage from '../components/edit'
+import SavePage from '../components/save'
 
 // 接口
 const api = $api.common.mediaType
 
 export default {
   name: page.name,
-  components: { AddPage, EditPage },
+  mixins: [mixins.list],
+  components: { SavePage },
   data() {
     return {
-      curr: { id: '' },
       list: {
         title: page.title,
         cols,
@@ -50,23 +48,7 @@ export default {
         }
       },
       removeAction: api.remove,
-      dialog: {
-        add: false,
-        edit: false
-      },
       buttons: page.buttons
-    }
-  },
-  methods: {
-    refresh() {
-      this.$refs.list.refresh()
-    },
-    add() {
-      this.dialog.add = true
-    },
-    edit(row) {
-      this.curr = row
-      this.dialog.edit = true
     }
   }
 }

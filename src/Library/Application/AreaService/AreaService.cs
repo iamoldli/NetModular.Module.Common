@@ -98,6 +98,7 @@ namespace NetModular.Module.Common.Application.AreaService
             if (await _repository.UpdateAsync(entity))
             {
                 await ClearCache(entity);
+                return ResultModel.Success();
             }
 
             return ResultModel.Failed();

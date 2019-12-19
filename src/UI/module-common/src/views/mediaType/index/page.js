@@ -1,6 +1,7 @@
 /** 页面信息 */
 const page = new (function() {
-  this.title = '多媒体管理'
+  this.title = '多媒体'
+  this.icon = 'media'
   this.name = 'common_mediatype'
   this.path = '/common/mediatype'
 

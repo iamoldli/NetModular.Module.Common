@@ -27,20 +27,17 @@
       </template>
     </nm-list>
 
-    <!--添加-->
-    <add-page :total="total" :visible.sync="dialog.add" @success="refresh" />
-    <!--编辑-->
-    <edit-page :id="curr.id" :visible.sync="dialog.edit" @success="refresh" />
+    <save-page :id="curr.id" :total="total" :visible.sync="dialog.save" @success="refresh" />
     <!--管理数据项-->
     <dict-item :dict="curr" :visible.sync="dialog.item" />
   </nm-container>
 </template>
 <script>
+import { mixins } from 'netmodular-ui'
 import page from './page'
 import cols from './cols'
 import GroupSelect from '../../dictGroup/components/select'
-import AddPage from '../components/add'
-import EditPage from '../components/edit'
+import SavePage from '../components/save'
 import DictItem from '../../dictItem'
 
 // 接口
@@ -48,10 +45,11 @@ const api = $api.common.dict
 
 export default {
   name: page.name,
-  components: { AddPage, EditPage, GroupSelect, DictItem },
+  mixins: [mixins.list],
+  components: { SavePage, GroupSelect, DictItem },
   data() {
     return {
-      curr: { id: '', code: '' },
+      curr: { code: '' },
       list: {
         title: '字典列表',
         cols,
@@ -65,26 +63,13 @@ export default {
         }
       },
       removeAction: api.remove,
-      dialog: {
-        add: false,
-        edit: false,
-        item: false
-      },
       buttons: page.buttons,
-      total: 0
+      dialog: {
+        item: false
+      }
     }
   },
   methods: {
-    refresh() {
-      this.$refs.list.refresh()
-    },
-    add() {
-      this.dialog.add = true
-    },
-    edit(row) {
-      this.curr = row
-      this.dialog.edit = true
-    },
     manageItem(row) {
       this.curr = row
       this.dialog.item = true
