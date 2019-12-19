@@ -13,12 +13,12 @@ export default name => {
   }
   // 下载
   const download = id => {
-    return $http.get(urls.download + id, {}, { responseType: 'blob' })
+    return $http.download(urls.download + id)
   }
 
   // 预览
   const preview = id => {
-    return $http.get(urls.download + id, {}, { responseType: 'blob', headers: { preview: true } })
+    return $http.preview(urls.download + id)
   }
 
   return {
