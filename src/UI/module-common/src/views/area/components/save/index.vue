@@ -43,13 +43,6 @@
         </el-form-item>
       </el-col>
     </el-row>
-    <el-row>
-      <el-col :span="10" :offset="1">
-        <el-form-item label="邮编：" prop="zipCode">
-          <nm-attachment-upload-img module="common" group="att" v-model="form.model.img" />
-        </el-form-item>
-      </el-col>
-    </el-row>
   </nm-form-dialog>
 </template>
 <script>
@@ -79,8 +72,7 @@ export default {
           /** 邮编 */
           zipCode: '',
           /** 区号 */
-          areaCode: '',
-          img: ''
+          areaCode: ''
         },
         rules: {
           parentId: [{ required: true, message: '请选择父节点' }],
