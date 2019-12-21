@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       levelList: ['province', 'city', 'area', 'town'],
-      value_: Object.assign({}, assist.deepCopy(defaultValue), assist.deepCopy(this.value)),
-      initValue: Object.assign({}, assist.deepCopy(defaultValue), assist.deepCopy(this.value))
+      value_: [],
+      initValue: []
     }
   },
   props: {
@@ -94,7 +94,6 @@ export default {
   },
   methods: {
     init() {
-      this.value_ = Object.assign({}, assist.deepCopy(defaultValue), assist.deepCopy(this.value))
       this.initValue = Object.assign({}, assist.deepCopy(defaultValue), assist.deepCopy(this.value))
     },
     getOptions(level) {
@@ -106,7 +105,6 @@ export default {
     reset() {
       // 重置为默认值
       this.value_ = Object.assign({}, assist.deepCopy(this.initValue))
-      this.onChange()
     },
     resetChild(level) {
       this.$refs['l' + level].reset_()
@@ -125,6 +123,7 @@ export default {
       if (val.fullName) {
         val.fullName = val.fullName.substring(0, val.fullName.length - 1)
       }
+
       this.$emit('input', val)
       this.$emit('change', val)
     }
@@ -134,8 +133,9 @@ export default {
   },
   watch: {
     value: {
+      immediate: true,
       handler() {
-        this.init()
+        this.value_ = Object.assign({}, assist.deepCopy(defaultValue), assist.deepCopy(this.value))
       }
     }
   }

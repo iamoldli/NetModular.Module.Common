@@ -132,6 +132,7 @@ export default {
         this.data = data.children
         this.tree.data = this.data
         this.title = data.label
+
         this.onChange(true)
       })
     },
@@ -154,8 +155,12 @@ export default {
       this.$refs.tree.setCheckedKeys(keys || this.selection.map(m => m.value))
     },
     onChange(refreshLabel) {
+      //此时数据还没加载
+      if (this.data === null) return
+
       this.selection = []
       let defaultExpandedKeys = []
+
       if (this.multiple) {
         //多选
         this.value.forEach(id => {
@@ -173,12 +178,14 @@ export default {
           this.selection = [item]
         }
       }
+
       this.tree.defaultExpandedKeys = defaultExpandedKeys
 
       //刷新label
       if (refreshLabel) {
-        this.label = this.selection.map(m => m.name).join(this.separator)
+        this.label = this.selection.map(m => m.name).join(` ${this.separator} `)
       }
+
       this.$nextTick(() => {
         this.setCheckedKeys()
         this.$emit('change', this.value_, this.selection_)
@@ -242,7 +249,7 @@ export default {
       }
     },
     onSave() {
-      this.label = this.selection.map(m => m.name).join(this.separator)
+      this.label = this.selection.map(m => m.name).join(` ${this.separator} `)
       this.$emit('input', this.value_)
       this.$emit('change', this.value_, this.selection_)
       this.actived = false
@@ -250,6 +257,7 @@ export default {
     reset() {
       this.selection = []
       this.setCheckedKeys([])
+      this.actived = false
       this.$emit('reset')
     },
     filter(children) {
@@ -265,7 +273,9 @@ export default {
   },
   watch: {
     value(val) {
-      if (val !== this.value_) this.onChange(true)
+      if (val !== this.value_) {
+        this.onChange(true)
+      }
     },
     keyword(val) {
       if (this.filterable) {
@@ -292,6 +302,11 @@ export default {
   .top {
     .el-input__inner {
       cursor: pointer;
+    }
+    .el-input.is-disabled {
+      .el-input__inner {
+        cursor: not-allowed;
+      }
     }
   }
   .bottom {

@@ -202,6 +202,7 @@ export default {
     right: 0;
     width: 30px;
     height: 30px;
+    line-height: 27px;
     border-radius: 15px;
     background-color: #f56c6c;
     color: #ccc;
@@ -222,6 +223,10 @@ export default {
 
   &.disabled:hover {
     border: 1px dashed #ccc;
+
+    .remove {
+      display: none;
+    }
   }
 
   .disabled-bg {

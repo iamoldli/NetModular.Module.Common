@@ -31,7 +31,6 @@ export default {
     get() {
       if (this.id) {
         api.preview(this.id).then(url => {
-          console.log(url)
           this.url = url
         })
       } else {
