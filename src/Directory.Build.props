@@ -4,7 +4,7 @@
     <Name>通用模块</Name>
     <Authors>Oldli</Authors>
     <Icon>database</Icon>
-    <Version>1.5.7</Version>
+    <Version>1.5.8</Version>
     <Description>NetModular Module $(Id)($(Name)) - $(MSBuildProjectName)</Description>
     <NoWarn>$(NoWarn);1591</NoWarn>
     <LangVersion>Latest</LangVersion>
@@ -17,7 +17,7 @@
     <PackageOutputPath>$(SolutionDir)\_packages</PackageOutputPath>
     <Company>Oldli</Company>
     <Copyright>Oldli</Copyright>
-    <PackageProjectUrl>https://nm.iamoldli.com/docs/</PackageProjectUrl>
+    <PackageProjectUrl>https://docs.17mkh.com/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/iamoldli/NetModular.Module.Common</RepositoryUrl>
   </PropertyGroup>
 </Project>

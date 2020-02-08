@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="NetModular.Lib.Cache.Abstractions" Version="1.7.0" />
     <PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.7.0" />
-    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.7.0" />
+    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.7.1" />
   </ItemGroup>
 
   <ItemGroup>
