@@ -2,10 +2,9 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.Extensions.Options;
 using NetModular.Lib.Utils.Core.Extensions;
-using NetModular.Lib.Utils.Core.Options;
 using NetModular.Lib.Utils.Core.Result;
+using NetModular.Lib.Utils.Core.SystemConfig;
 using NetModular.Module.Common.Application.AttachmentService.ResultModels;
 using NetModular.Module.Common.Application.AttachmentService.ViewModels;
 using NetModular.Module.Common.Domain.Attachment;
@@ -19,21 +18,21 @@ namespace NetModular.Module.Common.Application.AttachmentService
 {
     public class AttachmentService : IAttachmentService
     {
-        private readonly ModuleCommonOptions _moduleCommonOptions;
         private readonly IMapper _mapper;
         private readonly IAttachmentRepository _repository;
         private readonly IAttachmentOwnerRepository _ownerRepository;
         private readonly IMediaTypeRepository _mediaTypeRepository;
         private readonly CommonDbContext _dbContext;
+        private readonly SystemConfigModel _systemConfig;
 
-        public AttachmentService(IAttachmentRepository repository, IAttachmentOwnerRepository ownerRepository, IOptionsMonitor<ModuleCommonOptions> moduleCommonOptionsMonitor, IMediaTypeRepository mediaTypeRepository, IMapper mapper, CommonDbContext dbContext)
+        public AttachmentService(IAttachmentRepository repository, IAttachmentOwnerRepository ownerRepository, IMediaTypeRepository mediaTypeRepository, IMapper mapper, CommonDbContext dbContext, SystemConfigModel systemConfig)
         {
             _repository = repository;
             _ownerRepository = ownerRepository;
-            _moduleCommonOptions = moduleCommonOptionsMonitor.CurrentValue;
             _mediaTypeRepository = mediaTypeRepository;
             _mapper = mapper;
             _dbContext = dbContext;
+            _systemConfig = systemConfig;
         }
 
         public async Task<IResultModel> Query(AttachmentQueryModel model)
@@ -129,7 +128,7 @@ namespace NetModular.Module.Common.Application.AttachmentService
                 }
             }
 
-            var filePath = Path.Combine(_moduleCommonOptions.UploadPath, attachment.FullPath);
+            var filePath = Path.Combine(_systemConfig.Path.UploadPath, attachment.FullPath);
             if (!File.Exists(filePath))
                 return result.Failed("附件不存在");
 

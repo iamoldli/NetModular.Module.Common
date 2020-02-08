@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.Extensions.Options;
 using NetModular.Lib.Cache.Abstractions;
 using NetModular.Lib.Utils.Core.Extensions;
 using NetModular.Lib.Utils.Core.Result;
@@ -12,7 +11,6 @@ using NetModular.Module.Common.Domain.Dict;
 using NetModular.Module.Common.Domain.Dict.Models;
 using NetModular.Module.Common.Domain.DictItem;
 using NetModular.Module.Common.Infrastructure;
-using NetModular.Module.Common.Infrastructure.Options;
 
 namespace NetModular.Module.Common.Application.DictService
 {
@@ -24,13 +22,13 @@ namespace NetModular.Module.Common.Application.DictService
         private readonly CommonOptions _options;
         private readonly ICacheHandler _cacheHandler;
 
-        public DictService(IMapper mapper, IDictRepository repository, IOptionsMonitor<CommonOptions> optionsMonitor, ICacheHandler cacheHandler, IDictItemRepository itemRepository)
+        public DictService(IMapper mapper, IDictRepository repository, ICacheHandler cacheHandler, IDictItemRepository itemRepository, CommonOptions options)
         {
             _mapper = mapper;
             _repository = repository;
             _cacheHandler = cacheHandler;
             _itemRepository = itemRepository;
-            _options = optionsMonitor.CurrentValue;
+            _options = options;
         }
 
         public async Task<IResultModel> Query(DictQueryModel model)

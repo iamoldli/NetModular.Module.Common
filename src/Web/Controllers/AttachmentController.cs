@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Options;
 using NetModular.Lib.Auth.Abstractions;
 using NetModular.Lib.Auth.Web.Attributes;
-using NetModular.Lib.Utils.Core.Options;
 using NetModular.Lib.Utils.Core.Result;
+using NetModular.Lib.Utils.Core.SystemConfig;
 using NetModular.Lib.Utils.Mvc.Extensions;
 using NetModular.Lib.Utils.Mvc.Helpers;
 using NetModular.Module.Common.Application.AttachmentService;
@@ -24,14 +23,14 @@ namespace NetModular.Module.Common.Web.Controllers
         private readonly ILoginInfo _loginInfo;
         private readonly IAttachmentService _service;
         private readonly FileUploadHelper _fileUploadHelper;
-        private readonly ModuleCommonOptions _moduleCommonOptions;
+        private readonly SystemConfigModel _systemConfig;
 
-        public AttachmentController(IAttachmentService service, ILoginInfo loginInfo, FileUploadHelper fileUploadHelper, IOptionsMonitor<ModuleCommonOptions> iOptionsMonitor)
+        public AttachmentController(IAttachmentService service, ILoginInfo loginInfo, FileUploadHelper fileUploadHelper, SystemConfigModel systemConfig)
         {
             _service = service;
             _loginInfo = loginInfo;
             _fileUploadHelper = fileUploadHelper;
-            _moduleCommonOptions = iOptionsMonitor.CurrentValue;
+            _systemConfig = systemConfig;
         }
 
         [HttpGet]
@@ -51,7 +50,7 @@ namespace NetModular.Module.Common.Web.Controllers
             {
                 Request = Request,
                 FormFile = formFile,
-                RootPath = _moduleCommonOptions.UploadPath,
+                RootPath = _systemConfig.Path.UploadPath,
                 Module = "Common",
                 Group = Path.Combine("Attachment", model.Module, model.Group)
             };

@@ -5,24 +5,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetModular.Lib.Cache.MemoryCache" Version="1.5.3" />
-    <PackageReference Include="NetModular.Lib.Data.MySql" Version="1.5.9" />
-    <PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.5.9" />
-    <PackageReference Include="NetModular.Lib.Data.SqlServer" Version="1.5.9" />
-    <PackageReference Include="NetModular.Lib.Excel.EPPlus" Version="1.5.0" />
-    <PackageReference Include="NetModular.Lib.Host.Web" Version="1.5.4" />
-    <PackageReference Include="NetModular.Module.Admin.Web" Version="1.5.11" />
+    <PackageReference Include="NetModular.Lib.Cache.MemoryCache" Version="1.7.0" />
+    <PackageReference Include="NetModular.Lib.Data.MySql" Version="1.7.0" />
+    <PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.7.0" />
+    <PackageReference Include="NetModular.Lib.Data.SqlServer" Version="1.7.0" />
+    <PackageReference Include="NetModular.Lib.Excel.EPPlus" Version="1.7.0" />
+    <PackageReference Include="NetModular.Lib.Host.Web" Version="1.7.0" />
+    <PackageReference Include="NetModular.Module.Admin.Web" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Web\Web.csproj" />
   </ItemGroup>
 
-  <!--复制配置文件到输出目录-->
+  <Import Project="..\..\build\module.build.targets" />
+
   <ItemGroup>
-    <Content Update="config\**">
+    <!--复制配置文件到输出目录-->
+    <None Update="config\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <!--复制模块相关文件到输出路径中-->
+    <None Update="_modules\**\*.*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
