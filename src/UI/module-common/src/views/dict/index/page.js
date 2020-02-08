@@ -1,6 +1,7 @@
 /** 页面信息 */
 const page = new (function() {
   this.title = '字典列表'
+  this.icon = 'tag'
   this.name = 'common_dict'
   this.path = '/common/dict'
 

@@ -8,12 +8,6 @@ namespace NetModular.Module.Common.Infrastructure
     public class CommonOptions : IModuleOptions
     {
         /// <summary>
-        /// 附件上传路径
-        /// </summary>
-        [ModuleOptionDefinition("附件上传路径")]
-        public string AttachmentPath { get; set; }
-
-        /// <summary>
         /// 启用字典缓存
         /// </summary>
         [ModuleOptionDefinition("启用字典缓存")]

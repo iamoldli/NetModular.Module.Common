@@ -1,6 +1,6 @@
 /** 页面信息 */
 const page = new (function() {
-  this.title = '区划代码管理'
+  this.title = '区划代码'
   this.icon = 'area'
   this.name = 'common_area'
   this.path = '/common/area'
