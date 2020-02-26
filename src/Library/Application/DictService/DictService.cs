@@ -106,13 +106,10 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
-            List<OptionResultModel> result;
             var key = string.Format(CacheKeys.DictSelect, group.ToUpper(), code.ToUpper());
-            if (_options.DictCacheEnabled)
+            if (_options.DictCacheEnabled && _cacheHandler.TryGetValue(key, out List<OptionResultModel> result))
             {
-                result = await _cacheHandler.GetAsync<List<OptionResultModel>>(key);
-                if (result != null)
-                    return ResultModel.Success(result);
+                return ResultModel.Success(result);
             }
 
             var list = await _itemRepository.QueryChildren(group, code);
@@ -144,63 +141,49 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
-            TreeResultModel<string, DictItemTreeResultModel> tree;
             var key = string.Format(CacheKeys.DictTree, group.ToUpper(), code.ToUpper());
-            if (_options.DictCacheEnabled)
+            if (_options.DictCacheEnabled && _cacheHandler.TryGetValue(key, out TreeResultModel<int, DictItemTreeResultModel> root))
             {
-                tree = await _cacheHandler.GetAsync<TreeResultModel<string, DictItemTreeResultModel>>(key);
-                if (tree != null)
-                    return ResultModel.Success(tree);
+                return ResultModel.Success(root);
             }
 
             var dict = await _repository.GetByCode(group, code);
             if (dict == null)
                 return ResultModel.Failed("字典不存在");
 
-            tree = new TreeResultModel<string, DictItemTreeResultModel>
+            root = new TreeResultModel<int, DictItemTreeResultModel>
             {
-                Id = "",
+                Id = 0,
                 Label = dict.Name,
-                Path = { dict.Name },
-                Item = new DictItemTreeResultModel()
+                Item = new DictItemTreeResultModel
+                {
+                    Name = dict.Name
+                }
             };
-            var list = await _itemRepository.QueryAll(group, code);
-            tree.Children = ResolveTree(list, tree);
+
+            var all = await _itemRepository.QueryAll(group, code);
+            root.Children = ResolveTree(all);
 
             if (_options.DictCacheEnabled)
             {
-                await _cacheHandler.SetAsync(key, tree);
+                await _cacheHandler.SetAsync(key, root);
             }
 
-            return ResultModel.Success(tree);
+            return ResultModel.Success(root);
         }
 
-        private List<TreeResultModel<string, DictItemTreeResultModel>> ResolveTree(IList<DictItemEntity> all, TreeResultModel<string, DictItemTreeResultModel> parent)
+        private List<TreeResultModel<int, DictItemTreeResultModel>> ResolveTree(IList<DictItemEntity> all, int parentId = 0)
         {
-            return all.Where(m => m.ParentId == parent.Item.Id).OrderBy(m => m.Sort).Select(m =>
+            return all.Where(m => m.ParentId == parentId).OrderBy(m => m.Sort).Select(m =>
             {
-                var node = new TreeResultModel<string, DictItemTreeResultModel>
+                var node = new TreeResultModel<int, DictItemTreeResultModel>
                 {
-                    Id = m.Value,
+                    Id = m.Id,
                     Label = m.Name,
-                    Item = new DictItemTreeResultModel
-                    {
-                        Id = m.Id,
-                        Name = m.Name,
-                        Extend = m.Extend,
-                        Icon = m.Icon,
-                        Level = m.Level,
-                        ParentId = m.ParentId,
-                        Sort = m.Sort,
-                        Value = m.Value
-                    }
+                    Item = _mapper.Map<DictItemTreeResultModel>(m),
+                    Children = ResolveTree(all, m.Id)
                 };
-                node.Item.IdList.AddRange(parent.Item.IdList);
-                node.Item.IdList.Add(m.Value);
 
-                node.Path.AddRange(parent.Path);
-                node.Path.Add(node.Label);
-                node.Children = ResolveTree(all, node);
                 return node;
             }).ToList();
         }
