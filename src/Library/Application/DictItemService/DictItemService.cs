@@ -7,6 +7,7 @@ using NetModular.Module.Common.Application.DictItemService.ViewModels;
 using NetModular.Module.Common.Domain.DictItem;
 using NetModular.Module.Common.Domain.DictItem.Models;
 using NetModular.Module.Common.Infrastructure;
+using NetModular.Module.Common.Infrastructure.DictNoticeProvider;
 
 namespace NetModular.Module.Common.Application.DictItemService
 {
@@ -16,13 +17,15 @@ namespace NetModular.Module.Common.Application.DictItemService
         private readonly IDictItemRepository _repository;
         private readonly CommonOptions _options;
         private readonly ICacheHandler _cacheHandler;
+        private readonly IDictItemNoticeProvider _noticeProvider;
 
-        public DictItemService(IDictItemRepository repository, IMapper mapper, ICacheHandler cacheHandler, CommonOptions options)
+        public DictItemService(IDictItemRepository repository, IMapper mapper, ICacheHandler cacheHandler, CommonOptions options, IDictItemNoticeProvider noticeProvider)
         {
             _repository = repository;
             _mapper = mapper;
             _cacheHandler = cacheHandler;
             _options = options;
+            _noticeProvider = noticeProvider;
         }
 
         public async Task<IResultModel> Query(DictItemQueryModel model)
@@ -82,6 +85,8 @@ namespace NetModular.Module.Common.Application.DictItemService
             var result = await _repository.DeleteAsync(id);
             if (result)
             {
+                _noticeProvider.DeleteNotice(entity);
+
                 await ClearCache(entity.GroupCode, entity.DictCode);
             }
             return ResultModel.Result(result);
@@ -113,6 +118,7 @@ namespace NetModular.Module.Common.Application.DictItemService
             var result = await _repository.UpdateAsync(entity);
             if (result)
             {
+                _noticeProvider.ChangeNotice(entity);
                 await ClearCache(entity.GroupCode, entity.DictCode);
             }
             return ResultModel.Result(result);
