@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
-using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetModular.Lib.Module.Abstractions;
@@ -14,8 +11,6 @@ namespace NetModular.Module.Common.Infrastructure
     {
         public void Configure(IServiceCollection services, IModuleCollection modules, IHostEnvironment env)
         {
-            services.AddSingleton<IDictItemNoticeProvider, DictItemNoticeProvider>();
-
             //加载IDictItemListener的实现
             foreach (var module in modules)
             {

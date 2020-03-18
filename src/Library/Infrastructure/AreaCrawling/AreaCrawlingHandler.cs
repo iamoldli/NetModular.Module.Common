@@ -8,18 +8,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
+using NetModular.Lib.Utils.Core.Attributes;
 using Newtonsoft.Json;
 using NetModular.Lib.Utils.Core.Extensions;
 
 namespace NetModular.Module.Common.Infrastructure.AreaCrawling
 {
     /// <summary>
-    /// 从 http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html 爬取数据
+    /// 从 http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/index.html 爬取数据
     /// </summary>
+    [Singleton]
     public class AreaCrawlingHandler : IAreaCrawlingHandler
     {
         public static int Index = 0;
-        private const string BaseUrl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/";
+        private const string BaseUrl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/";
         private HttpClient _httpClient;
         private readonly ILogger _logger;
 

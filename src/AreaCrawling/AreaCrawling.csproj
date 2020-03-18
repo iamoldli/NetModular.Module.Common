@@ -2,20 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <ApplicationIcon />
-    <StartupObject />
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <!--复制本地锁定的程序集到输出目录-->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NetModular.Lib.Cache.Abstractions" Version="1.8.0" />
-    <PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.8.0" />
-    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.8.0" />
+    <PackageReference Include="NetModular.Lib.Cache.MemoryCache" Version="1.8.0" />
+    <PackageReference Include="NetModular.Lib.Data.MySql" Version="1.8.1" />
+    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.8.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Library\Application\Application.csproj" />
-    <ProjectReference Include="..\Library\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +33,15 @@
     <None Update="config\logging.Development.json">
       <DependentUpon>config\logging.json</DependentUpon>
     </None>
+  </ItemGroup>
+
+  <!--打包模块相关文件到NuGet包中，此功能需要编译两次项目才行，因为打包操作在创建_module.json文件之前执行的-->
+  <ItemGroup>
+    <Content Include="$(SolutionDir)\src\WebHost\_modules*\**\*.*" PackagePath="contentFiles\any\any">
+      <Pack>true</Pack>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
