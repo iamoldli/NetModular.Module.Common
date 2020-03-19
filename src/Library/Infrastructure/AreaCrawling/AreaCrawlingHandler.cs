@@ -20,11 +20,10 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
     [Singleton]
     public class AreaCrawlingHandler : IAreaCrawlingHandler
     {
-        public static int Index = 0;
         private const string BaseUrl = "http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/";
         private HttpClient _httpClient;
         private readonly ILogger _logger;
-
+        private readonly IList<AreaCrawlingModel> _list = new List<AreaCrawlingModel>();
         public AreaCrawlingHandler(ILogger<AreaCrawlingHandler> logger)
         {
             _logger = logger;
@@ -34,7 +33,12 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
         {
             using (_httpClient = new HttpClient())
             {
-                return await CrawlingProvinces();
+                _httpClient.Timeout = new TimeSpan(0, 0, 10);
+                _list.Clear();
+
+                await CrawlingProvinces();
+
+                return _list;
             }
         }
 
@@ -42,19 +46,16 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
         /// 爬取省份
         /// </summary>
         /// <returns></returns>
-        private async Task<IList<AreaCrawlingModel>> CrawlingProvinces()
+        private async Task CrawlingProvinces()
         {
-            var list = new List<AreaCrawlingModel>();
-
             var url = BaseUrl + "index.html";
             var html = await GetResponse(url);
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
             var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='provincetr']//a");
 
-            //foreach (var node in nodeList)
+            foreach (var node in nodeList)
             {
-                var node = nodeList[Index];
                 var href = node.Attributes["href"].Value;
                 var code = href.Split('.')[0];
                 var model = new AreaCrawlingModel
@@ -70,10 +71,8 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
 
                 CrawlingCities(model, href, code);
 
-                list.Add(model);
+                _list.Add(model);
             }
-
-            return list;
         }
 
         /// <summary>
@@ -88,27 +87,30 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
             try
             {
                 var html = GetResponse(BaseUrl + url).Result;
-                var doc = new HtmlDocument();
-                doc.LoadHtml(html);
-                var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='citytr']");
-                foreach (var node in nodeList)
+                if (html.NotNull())
                 {
-                    var codeNode = node.SelectSingleNode("td[1]/a");
-                    var nameNode = node.SelectSingleNode("td[2]/a");
-                    var model = new AreaCrawlingModel
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='citytr']");
+                    foreach (var node in nodeList)
                     {
-                        Code = codeNode.InnerText,
-                        Name = nameNode.InnerText,
-                        FullName = parent.FullName + nameNode.InnerText
-                    };
+                        var codeNode = node.SelectSingleNode("td[1]/a");
+                        var nameNode = node.SelectSingleNode("td[2]/a");
+                        var model = new AreaCrawlingModel
+                        {
+                            Code = codeNode.InnerText,
+                            Name = nameNode.InnerText,
+                            FullName = parent.FullName + nameNode.InnerText
+                        };
 
-                    SetPinyin(model);
-                    var href = codeNode.Attributes["href"].Value;
+                        SetPinyin(model);
+                        var href = codeNode.Attributes["href"].Value;
 
-                    CrawlingCounty(model, href, provinceCode);
-                    CrawlingCoord(model).ConfigureAwait(false);
+                        CrawlingCounty(model, href, provinceCode);
+                        CrawlingCoord(model).ConfigureAwait(false);
 
-                    parent.Children.Add(model);
+                        parent.Children.Add(model);
+                    }
                 }
             }
             catch (Exception ex)
@@ -134,55 +136,59 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
             {
                 var isTown = false;
                 var html = GetResponse(BaseUrl + url).Result;
-                var doc = new HtmlDocument();
-                doc.LoadHtml(html);
-                var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='countytr']");
-                if (nodeList == null)
+                if (html.NotNull())
                 {
-                    nodeList = doc.DocumentNode.SelectNodes("//tr[@class='towntr']");
-                    isTown = true;
-                }
-
-                if (nodeList == null)
-                {
-                    _logger.LogDebug("没有数据");
-                    return;
-                }
-                foreach (var node in nodeList)
-                {
-                    var codeNode = node.SelectSingleNode("td[1]/a");
-                    var nameNode = node.SelectSingleNode("td[2]/a");
-                    if (codeNode == null)
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='countytr']");
+                    if (nodeList == null)
                     {
-                        codeNode = node.SelectSingleNode("td[1]");
-                        nameNode = node.SelectSingleNode("td[2]");
+                        nodeList = doc.DocumentNode.SelectNodes("//tr[@class='towntr']");
+                        isTown = true;
                     }
 
-                    if (codeNode == null || nameNode == null || nameNode.InnerText == "市辖区")
+                    if (nodeList == null)
                     {
-                        continue;
+                        _logger.LogDebug("没有数据");
+                        return;
                     }
 
-                    var model = new AreaCrawlingModel
+                    foreach (var node in nodeList)
                     {
-                        Code = codeNode.InnerText,
-                        Name = nameNode.InnerText,
-                        FullName = parent.FullName + nameNode.InnerText
-                    };
-
-                    SetPinyin(model);
-                    CrawlingCoord(model).ConfigureAwait(false);
-
-                    if (!isTown)
-                    {
-                        var hrefAttribute = codeNode.Attributes["href"];
-                        if (hrefAttribute != null)
+                        var codeNode = node.SelectSingleNode("td[1]/a");
+                        var nameNode = node.SelectSingleNode("td[2]/a");
+                        if (codeNode == null)
                         {
-                            CrawlingTown(model, hrefAttribute.Value, provinceCode);
+                            codeNode = node.SelectSingleNode("td[1]");
+                            nameNode = node.SelectSingleNode("td[2]");
                         }
-                    }
 
-                    parent.Children.Add(model);
+                        if (codeNode == null || nameNode == null || nameNode.InnerText == "市辖区")
+                        {
+                            continue;
+                        }
+
+                        var model = new AreaCrawlingModel
+                        {
+                            Code = codeNode.InnerText,
+                            Name = nameNode.InnerText,
+                            FullName = parent.FullName + nameNode.InnerText
+                        };
+
+                        SetPinyin(model);
+                        CrawlingCoord(model).ConfigureAwait(false);
+
+                        if (!isTown)
+                        {
+                            var hrefAttribute = codeNode.Attributes["href"];
+                            if (hrefAttribute != null)
+                            {
+                                CrawlingTown(model, hrefAttribute.Value, provinceCode);
+                            }
+                        }
+
+                        parent.Children.Add(model);
+                    }
                 }
             }
             catch (Exception ex)
@@ -207,29 +213,31 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
             try
             {
                 var html = GetResponse(BaseUrl + provinceCode + "/" + url).Result;
-                var doc = new HtmlDocument();
-                doc.LoadHtml(html);
-                var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='towntr']");
-                foreach (var node in nodeList)
+                if (html.NotNull())
                 {
-                    var codeNode = node.SelectSingleNode("td[1]/a");
-                    var nameNode = node.SelectSingleNode("td[2]/a");
-
-                    var model = new AreaCrawlingModel
+                    var doc = new HtmlDocument();
+                    doc.LoadHtml(html);
+                    var nodeList = doc.DocumentNode.SelectNodes("//tr[@class='towntr']");
+                    foreach (var node in nodeList)
                     {
-                        Code = codeNode.InnerText,
-                        Name = nameNode.InnerText,
-                        FullName = parent.FullName + nameNode.InnerText
-                    };
+                        var codeNode = node.SelectSingleNode("td[1]/a");
+                        var nameNode = node.SelectSingleNode("td[2]/a");
 
-                    SetPinyin(model);
+                        var model = new AreaCrawlingModel
+                        {
+                            Code = codeNode.InnerText,
+                            Name = nameNode.InnerText,
+                            FullName = parent.FullName + nameNode.InnerText
+                        };
 
-                    CrawlingCoord(model).ConfigureAwait(false);
+                        SetPinyin(model);
 
-                    parent.Children.Add(model);
-                    _logger.LogDebug(model.FullName);
+                        CrawlingCoord(model).ConfigureAwait(false);
+
+                        parent.Children.Add(model);
+                        _logger.LogDebug(model.FullName);
+                    }
                 }
-                Thread.Sleep(1000);
             }
             catch (Exception ex)
             {
@@ -254,16 +262,18 @@ namespace NetModular.Module.Common.Infrastructure.AreaCrawling
                 var url = "https://restapi.amap.com/v3/place/text?key=8325164e247e15eea68b59e89200988b&keywords=" +
                           entity.Name;
                 var json = await _httpClient.GetStringAsync(url);
-
-                var model = JsonConvert.DeserializeAnonymousType(json, new { pois = new[] { new { location = "" } } });
-                if (model.pois.Any())
+                if (json.NotNull())
                 {
-                    var location = model.pois.First().location;
-                    if (location.NotNull())
+                    var model = JsonConvert.DeserializeAnonymousType(json, new { pois = new[] { new { location = "" } } });
+                    if (model.pois.Any())
                     {
-                        var arr = location.Split(',');
-                        entity.Longitude = arr[0];
-                        entity.Latitude = arr[1];
+                        var location = model.pois.First().location;
+                        if (location.NotNull())
+                        {
+                            var arr = location.Split(',');
+                            entity.Longitude = arr[0];
+                            entity.Latitude = arr[1];
+                        }
                     }
                 }
             }

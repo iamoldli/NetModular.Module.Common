@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetModular.Module.Common.Application.AreaService;
 using NetModular.Module.Common.Infrastructure.AreaCrawling;
+using Newtonsoft.Json;
 
 namespace NetModular.Module.Common.AreaCrawling
 {
@@ -27,15 +30,8 @@ namespace NetModular.Module.Common.AreaCrawling
             {
                 _logger.LogInformation("开始爬取区域代码数据");
 
-                var tasks = new Task[31];
-                for (int i = 0; i < 31; i++)
-                {
-                    AreaCrawlingHandler.Index = i;
-                    var list = await _crawlingHandler.Crawling();
-                    await _service.CrawlInsert(list);
-                }
-
-                Task.WaitAll(tasks);
+                var list = await _crawlingHandler.Crawling();
+                await _service.CrawlInsert(list);
 
                 _logger.LogInformation("爬取结束");
             }
