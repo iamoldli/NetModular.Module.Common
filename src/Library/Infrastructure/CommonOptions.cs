@@ -12,5 +12,13 @@ namespace NetModular.Module.Common.Infrastructure
         /// </summary>
         [ModuleOptionDefinition("启用字典缓存")]
         public bool DictCacheEnabled { get; set; } = true;
+
+        public IModuleOptions Copy()
+        {
+            return new CommonOptions
+            {
+                DictCacheEnabled = DictCacheEnabled
+            };
+        }
     }
 }

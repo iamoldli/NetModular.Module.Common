@@ -9,7 +9,7 @@
           <el-input v-model="form.model.value" clearable />
         </el-form-item>
         <el-form-item label="扩展数据：" prop="extend">
-          <el-input type="textarea" v-model="form.model.extend" clearable />
+          <extend-editor v-model="form.model.extend" />
         </el-form-item>
         <el-form-item label="图标：" prop="icon">
           <nm-icon-picker v-model="form.model.icon" clearable />
@@ -23,12 +23,14 @@
 </template>
 <script>
 import { mixins } from 'netmodular-ui'
+import ExtendEditor from '../extend-editor'
 
 // 接口
 const { add, edit, update } = $api.common.dictItem
 
 export default {
   mixins: [mixins.formSave],
+  components: { ExtendEditor },
   data() {
     return {
       title: '字典数据项',

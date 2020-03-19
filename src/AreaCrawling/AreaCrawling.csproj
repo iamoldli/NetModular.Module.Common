@@ -5,13 +5,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <!--复制本地锁定的程序集到输出目录-->
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NetModular.Lib.Cache.MemoryCache" Version="1.8.0" />
     <PackageReference Include="NetModular.Lib.Data.MySql" Version="1.8.1" />
     <PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.8.1" />
-    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.8.5" />
+    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.8.6" />
   </ItemGroup>
 
   <ItemGroup>

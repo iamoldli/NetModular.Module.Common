@@ -13,7 +13,7 @@ export default [
     label: '值'
   },
   {
-    name: 'Extend',
+    name: 'extend',
     label: '扩展数据'
   },
   {

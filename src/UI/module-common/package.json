@@ -1,6 +1,6 @@
 {
   "name": "netmodular-module-common",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "code": "common",
   "title": "通用模块",
   "description": "通用模块",
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "netmodular-module-admin": "^1.2.9",
-    "netmodular-ui": "^1.6.4"
+    "netmodular-ui": "^1.6.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.3",
@@ -34,7 +34,7 @@
     "prettier": "^1.18.2",
     "raw-loader": "^3.1.0",
     "rimraf": "^3.0.2",
-    "sass": "^1.26.2",
+    "sass": "^1.26.3",
     "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.11"
   }

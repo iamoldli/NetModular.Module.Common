@@ -1,5 +1,5 @@
 <template>
-  <nm-box page header refresh :title="title" icon="tree" @refresh="refresh">
+  <nm-box page header refresh title="字典结构" icon="tree" @refresh="refresh">
     <el-tree class="nm-tree" ref="tree" v-bind="tree" v-on="on">
       <span slot-scope="{ data }">
         <nm-icon :name="data.item.icon || 'attachment'" />
@@ -13,15 +13,14 @@ const api = $api.common.dict
 export default {
   data() {
     return {
-      title: '',
       tree: {
         data: [],
         nodeKey: 'id',
         highlightCurrent: true,
         props: { children: 'children', label: 'label' },
-        currentNodeKey: '',
+        currentNodeKey: 0,
         expandOnClickNode: false,
-        defaultExpandedKeys: ['']
+        defaultExpandedKeys: [0]
       },
       on: {
         'current-change': this.onChange,
@@ -39,8 +38,7 @@ export default {
     refresh(init) {
       const params = { group: this.dict.groupCode, code: this.dict.code }
       api.tree(params).then(data => {
-        this.title = data.label
-        this.tree.data = data.children
+        this.tree.data = [data]
         if (init) {
           //初始化触发一次change事件
           this.onChange(data)

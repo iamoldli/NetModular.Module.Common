@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using NetModular.Lib.Utils.Core.Attributes;
 using NetModular.Lib.Utils.Core.Extensions;
 using NetModular.Module.Common.Domain.DictItem;
 
 namespace NetModular.Module.Common.Infrastructure.DictNoticeProvider
 {
+    [Singleton]
     public class DictItemNoticeProvider : IDictItemNoticeProvider
     {
         private readonly IServiceProvider _sp;
