@@ -30,12 +30,15 @@ export default {
   },
   methods: {
     onSuccess(text) {
-      this.$emit('input', text)
+      this.value_ = text
     }
   },
   watch: {
     value(val) {
       if (val !== this.value_) this.value_ = val
+    },
+    value_(val) {
+      this.$emit('input', val)
     }
   }
 }

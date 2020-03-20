@@ -1,5 +1,5 @@
 <template>
-  <nm-box page header refresh title="字典结构" icon="tree" @refresh="refresh">
+  <nm-box page header title="字典结构" icon="tree">
     <el-tree class="nm-tree" ref="tree" v-bind="tree" v-on="on">
       <span slot-scope="{ data }">
         <nm-icon :name="data.item.icon || 'attachment'" />

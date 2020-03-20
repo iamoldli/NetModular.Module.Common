@@ -72,11 +72,12 @@ export default {
     total: Number
   },
   methods: {
-    onSuccess(id) {
+    onSuccess(newId) {
       if (this.isAdd_) {
-        this.form.model.id = id
+        this.form.model.id = newId
       }
-      this.$emit('success', this.isAdd_, { id: this.form.model.value, label: this.form.model.name, item: Object.assign({}, this.form.model) })
+      const { id, name } = this.form.model
+      this.$emit('success', this.isAdd_, { id, label: name, item: Object.assign({}, this.form.model) })
     },
     onReset() {
       if (this.isAdd_) {
