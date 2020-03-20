@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\Library\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AreaCrawling", "src\AreaCrawling\AreaCrawling.csproj", "{53ACB22B-F14A-4F36-B7E0-653F589DF4F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generic", "src\Generic\Generic.csproj", "{A5EDB773-B9C7-42F7-A654-61D6DC0A72AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{53ACB22B-F14A-4F36-B7E0-653F589DF4F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53ACB22B-F14A-4F36-B7E0-653F589DF4F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53ACB22B-F14A-4F36-B7E0-653F589DF4F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5EDB773-B9C7-42F7-A654-61D6DC0A72AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5EDB773-B9C7-42F7-A654-61D6DC0A72AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5EDB773-B9C7-42F7-A654-61D6DC0A72AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5EDB773-B9C7-42F7-A654-61D6DC0A72AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{CEAE0B43-438D-4778-BF3A-8665246EF718} = {B4D3AF99-D551-4B7A-82F3-CE0950FCAA08}
 		{792B8CBF-AB02-4A87-AB5E-A6CB8E9DE39C} = {E58182FC-0950-453F-8C3A-ABCB477C8A28}
 		{53ACB22B-F14A-4F36-B7E0-653F589DF4F7} = {B4D3AF99-D551-4B7A-82F3-CE0950FCAA08}
+		{A5EDB773-B9C7-42F7-A654-61D6DC0A72AC} = {B4D3AF99-D551-4B7A-82F3-CE0950FCAA08}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A6F430A-4015-48B1-BD5B-32C30485B34D}
