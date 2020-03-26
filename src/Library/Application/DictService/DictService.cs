@@ -179,6 +179,7 @@ namespace NetModular.Module.Common.Application.DictService
                 {
                     Id = m.Id,
                     Label = m.Name,
+                    Value = m.Value,
                     Item = _mapper.Map<DictItemTreeResultModel>(m),
                     Children = ResolveTree(all, m.Id)
                 };
