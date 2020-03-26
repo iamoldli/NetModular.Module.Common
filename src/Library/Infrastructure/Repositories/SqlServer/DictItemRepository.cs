@@ -37,6 +37,26 @@ namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
             return list;
         }
 
+        public Task<IList<DictItemEntity>> QueryAll(DictItemQueryModel model)
+        {
+            var paging = model.Paging();
+            var query = Db.Find();
+            query.WhereNotNull(model.GroupCode, m => m.GroupCode == model.GroupCode);
+            query.WhereNotNull(model.DictCode, m => m.DictCode == model.DictCode);
+            query.WhereNotNull(model.Name, m => m.Name.Contains(model.Name));
+            query.WhereNotNull(model.Value, m => m.Value.Contains(model.Value));
+
+            var joinQuery = query.LeftJoin<AccountEntity>((x, y) => x.CreatedBy == y.Id)
+                .Select((x, y) => new { x, Creator = y.Name });
+
+            if (!paging.OrderBy.Any())
+            {
+                joinQuery.OrderBy((x, y) => x.Sort);
+            }
+
+            return joinQuery.ToListAsync();
+        }
+
         public Task<IList<DictItemEntity>> QueryAll(string groupCode, string dictCode)
         {
             var query = Db.Find(m => m.GroupCode == groupCode && m.DictCode == dictCode);

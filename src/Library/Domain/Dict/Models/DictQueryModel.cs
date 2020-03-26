@@ -10,7 +10,7 @@ namespace NetModular.Module.Common.Domain.Dict.Models
         public string GroupCode { get; set; }
 
         /// <summary>
-        /// 名称
+        /// 名称，模糊查询
         /// </summary>
         public string Name { get; set; }
 

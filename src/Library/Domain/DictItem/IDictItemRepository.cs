@@ -15,6 +15,13 @@ namespace NetModular.Module.Common.Domain.DictItem
         Task<IList<DictItemEntity>> Query(DictItemQueryModel model);
 
         /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<IList<DictItemEntity>> QueryAll(DictItemQueryModel model);
+
+        /// <summary>
         /// 查询指定字典的所有数据项
         /// </summary>
         /// <param name="groupCode"></param>

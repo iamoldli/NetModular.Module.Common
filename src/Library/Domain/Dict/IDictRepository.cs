@@ -18,6 +18,13 @@ namespace NetModular.Module.Common.Domain.Dict
         Task<IList<DictEntity>> Query(DictQueryModel model);
 
         /// <summary>
+        /// 查询
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<IList<DictEntity>> QueryAll(DictQueryModel model);
+
+        /// <summary>
         /// 是否存在
         /// </summary>
         /// <returns></returns>
