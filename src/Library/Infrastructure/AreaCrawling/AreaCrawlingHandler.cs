@@ -10,7 +10,6 @@ using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using NetModular.Lib.Utils.Core.Attributes;
 using Newtonsoft.Json;
-using NetModular.Lib.Utils.Core.Extensions;
 
 namespace NetModular.Module.Common.Infrastructure.AreaCrawling
 {

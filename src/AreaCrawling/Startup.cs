@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetModular.Module.Common.Application.AreaService;
 using NetModular.Module.Common.Infrastructure.AreaCrawling;
-using Newtonsoft.Json;
 
 namespace NetModular.Module.Common.AreaCrawling
 {

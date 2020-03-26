@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NetModular.Module.Common.Application.DictItemService.ResultModels
+﻿namespace NetModular.Module.Common.Application.DictItemService.ResultModels
 {
     public class DictItemTreeResultModel
     {
