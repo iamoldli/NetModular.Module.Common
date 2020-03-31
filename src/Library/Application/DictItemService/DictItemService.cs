@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using NetModular.Lib.Cache.Abstractions;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictItemService.ViewModels;
 using NetModular.Module.Common.Domain.DictItem;
 using NetModular.Module.Common.Domain.DictItem.Models;
@@ -127,8 +126,8 @@ namespace NetModular.Module.Common.Application.DictItemService
         {
             if (_options.DictCacheEnabled)
             {
-                var selectKey = string.Format(CacheKeys.DictSelect, group.ToUpper(), code.ToUpper());
-                var treeKey = string.Format(CacheKeys.DictTree, group.ToUpper(), code.ToUpper());
+                var selectKey = $"{CacheKeys.DICT_SELECT}:{group.ToUpper()}_{code.ToUpper()}";
+                var treeKey = $"{CacheKeys.DICT_TREE}:{group.ToUpper()}_{code.ToUpper()}";
                 await _cacheHandler.RemoveAsync(selectKey);
                 await _cacheHandler.RemoveAsync(treeKey);
             }

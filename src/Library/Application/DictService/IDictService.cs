@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictService.ViewModels;
 using NetModular.Module.Common.Domain.Dict.Models;
 

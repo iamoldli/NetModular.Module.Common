@@ -64,7 +64,7 @@ namespace NetModular.Module.Common.Application.DictService
             var result = await _repository.DeleteAsync(id);
             if (result)
             {
-                await _cacheHandler.RemoveAsync($"{CacheKeys.DictSelect}{entity.GroupCode.ToUpper()}_{entity.Code.ToUpper()}");
+                await _cacheHandler.RemoveAsync($"{CacheKeys.DICT_SELECT}:{entity.GroupCode.ToUpper()}_{entity.Code.ToUpper()}");
             }
             return ResultModel.Result(result);
         }
@@ -95,7 +95,7 @@ namespace NetModular.Module.Common.Application.DictService
             var result = await _repository.UpdateAsync(entity);
             if (result)
             {
-                await _cacheHandler.RemoveAsync($"{CacheKeys.DictSelect}{entity.GroupCode.ToUpper()}_{entity.Code.ToUpper()}");
+                await _cacheHandler.RemoveAsync($"{CacheKeys.DICT_SELECT}:{entity.GroupCode.ToUpper()}_{entity.Code.ToUpper()}");
             }
             return ResultModel.Result(result);
         }
@@ -105,7 +105,7 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
-            var key = string.Format(CacheKeys.DictSelect, group.ToUpper(), code.ToUpper());
+            var key = $"{CacheKeys.DICT_SELECT}:{group.ToUpper()}_{code.ToUpper()}";
             if (_options.DictCacheEnabled && _cacheHandler.TryGetValue(key, out List<OptionResultModel> result))
             {
                 return ResultModel.Success(result);
@@ -140,7 +140,7 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
-            var key = string.Format(CacheKeys.DictTree, group.ToUpper(), code.ToUpper());
+            var key = $"{CacheKeys.DICT_TREE}:{group.ToUpper()}_{code.ToUpper()}";
             if (_options.DictCacheEnabled && _cacheHandler.TryGetValue(key, out TreeResultModel<int, DictItemTreeResultModel> root))
             {
                 return ResultModel.Success(root);

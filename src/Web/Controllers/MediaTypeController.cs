@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.MediaTypeService;
 using NetModular.Module.Common.Application.MediaTypeService.ViewModels;
 using NetModular.Module.Common.Domain.MediaType.Models;

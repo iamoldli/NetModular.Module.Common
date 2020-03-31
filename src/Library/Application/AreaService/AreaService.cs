@@ -4,7 +4,6 @@ using AutoMapper;
 using NetModular.Lib.Cache.Abstractions;
 using NetModular.Lib.Data.Abstractions;
 using NetModular.Lib.Utils.Core.Attributes;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.AreaService.ViewModels;
 using NetModular.Module.Common.Domain.Area;
 using NetModular.Module.Common.Domain.Area.Models;
@@ -138,7 +137,7 @@ namespace NetModular.Module.Common.Application.AreaService
         public async Task<IResultModel<IList<AreaEntity>>> QueryChildren(string parentCode)
         {
             var result = new ResultModel<IList<AreaEntity>>();
-            var cacheKey = CacheKeys.Area + parentCode;
+            var cacheKey = CacheKeys.AREA + parentCode;
             if (!_cache.TryGetValue(cacheKey, out IList<AreaEntity> list))
             {
                 var parentId = 0;
@@ -165,7 +164,7 @@ namespace NetModular.Module.Common.Application.AreaService
                 var parent = await _repository.GetAsync(entity.ParentId);
                 if (parent != null)
                 {
-                    await _cache.RemoveAsync(CacheKeys.Area + parent.Code);
+                    await _cache.RemoveAsync(CacheKeys.AREA + parent.Code);
                 }
             }
         }

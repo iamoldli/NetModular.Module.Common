@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NetModular.Lib.Auth.Web.Attributes;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictService;
 using NetModular.Module.Common.Application.DictService.ViewModels;
 using NetModular.Module.Common.Domain.Dict.Models;

@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using NetModular.Lib.Utils.Core.Result;
-using NetModular.Lib.Utils.Core.SystemConfig;
 using NetModular.Module.Common.Application.AttachmentService.ResultModels;
 using NetModular.Module.Common.Application.AttachmentService.ViewModels;
 using NetModular.Module.Common.Domain.Attachment;

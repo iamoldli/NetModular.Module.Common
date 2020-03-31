@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictGroupService.ViewModels;
 using NetModular.Module.Common.Domain.DictGroup;
 using NetModular.Module.Common.Domain.DictGroup.Models;

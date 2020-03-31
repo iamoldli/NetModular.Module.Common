@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.MediaTypeService.ViewModels;
 using NetModular.Module.Common.Domain.MediaType;
 using NetModular.Module.Common.Domain.MediaType.Models;
