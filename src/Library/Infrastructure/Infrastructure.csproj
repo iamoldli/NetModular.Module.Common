@@ -6,8 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.23" />
-    <PackageReference Include="NetModular.Lib.Options.Abstraction" Version="1.9.4" />
-    <PackageReference Include="NetModular.Module.Admin.Domain" Version="1.9.7" />
+    <PackageReference Include="NetModular.Lib.Config.Abstractions" Version="1.9.0" />
+    <PackageReference Include="NetModular.Lib.Module.Abstractions" Version="1.9.6" />
+    <PackageReference Include="NetModular.Module.Admin.Domain" Version="1.9.10" />
     <PackageReference Include="NPinyin.Core" Version="3.0.0" />
   </ItemGroup>
 

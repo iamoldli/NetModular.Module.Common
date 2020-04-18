@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NetModular.Lib.Auth.Abstractions;
 using NetModular.Lib.Auth.Web.Attributes;
+using NetModular.Lib.Config.Abstractions;
+using NetModular.Lib.Config.Abstractions.Impl;
 using NetModular.Lib.Utils.Mvc.Extensions;
 using NetModular.Lib.Utils.Mvc.Helpers;
 using NetModular.Module.Common.Application.AttachmentService;
@@ -21,14 +23,13 @@ namespace NetModular.Module.Common.Web.Controllers
         private readonly ILoginInfo _loginInfo;
         private readonly IAttachmentService _service;
         private readonly FileUploadHelper _fileUploadHelper;
-        private readonly SystemConfigModel _systemConfig;
-
-        public AttachmentController(IAttachmentService service, ILoginInfo loginInfo, FileUploadHelper fileUploadHelper, SystemConfigModel systemConfig)
+        private readonly IConfigProvider _configProvider;
+        public AttachmentController(IAttachmentService service, ILoginInfo loginInfo, FileUploadHelper fileUploadHelper, IConfigProvider configProvider)
         {
             _service = service;
             _loginInfo = loginInfo;
             _fileUploadHelper = fileUploadHelper;
-            _systemConfig = systemConfig;
+            _configProvider = configProvider;
         }
 
         [HttpGet]
@@ -44,11 +45,12 @@ namespace NetModular.Module.Common.Web.Controllers
         public async Task<IResultModel> Upload([FromForm]AttachmentUploadModel model, IFormFile formFile)
         {
             model.AccountId = _loginInfo.AccountId;
+            var config = _configProvider.Get<PathConfig>();
             var uploadModel = new FileUploadModel
             {
                 Request = Request,
                 FormFile = formFile,
-                RootPath = _systemConfig.Path.UploadPath,
+                RootPath = config.UploadPath,
                 Module = "Common",
                 Group = Path.Combine("Attachment", model.Module, model.Group)
             };

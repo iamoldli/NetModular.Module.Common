@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using NetModular.Lib.Config.Abstractions;
+using NetModular.Lib.Config.Abstractions.Impl;
 using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.AttachmentService.ResultModels;
 using NetModular.Module.Common.Application.AttachmentService.ViewModels;
@@ -21,16 +23,16 @@ namespace NetModular.Module.Common.Application.AttachmentService
         private readonly IAttachmentOwnerRepository _ownerRepository;
         private readonly IMediaTypeRepository _mediaTypeRepository;
         private readonly CommonDbContext _dbContext;
-        private readonly SystemConfigModel _systemConfig;
+        private readonly IConfigProvider _configProvider;
 
-        public AttachmentService(IAttachmentRepository repository, IAttachmentOwnerRepository ownerRepository, IMediaTypeRepository mediaTypeRepository, IMapper mapper, CommonDbContext dbContext, SystemConfigModel systemConfig)
+        public AttachmentService(IAttachmentRepository repository, IAttachmentOwnerRepository ownerRepository, IMediaTypeRepository mediaTypeRepository, IMapper mapper, CommonDbContext dbContext, IConfigProvider configProvider)
         {
             _repository = repository;
             _ownerRepository = ownerRepository;
             _mediaTypeRepository = mediaTypeRepository;
             _mapper = mapper;
             _dbContext = dbContext;
-            _systemConfig = systemConfig;
+            _configProvider = configProvider;
         }
 
         public async Task<IResultModel> Query(AttachmentQueryModel model)
@@ -126,7 +128,8 @@ namespace NetModular.Module.Common.Application.AttachmentService
                 }
             }
 
-            var filePath = Path.Combine(_systemConfig.Path.UploadPath, attachment.FullPath);
+            var config = _configProvider.Get<PathConfig>();
+            var filePath = Path.Combine(config.UploadPath, attachment.FullPath);
             if (!File.Exists(filePath))
                 return result.Failed("附件不存在");
 

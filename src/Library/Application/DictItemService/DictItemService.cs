@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using NetModular.Lib.Cache.Abstractions;
+using NetModular.Lib.Config.Abstractions;
 using NetModular.Module.Common.Application.DictItemService.ViewModels;
 using NetModular.Module.Common.Domain.DictItem;
 using NetModular.Module.Common.Domain.DictItem.Models;
@@ -13,17 +14,16 @@ namespace NetModular.Module.Common.Application.DictItemService
     {
         private readonly IMapper _mapper;
         private readonly IDictItemRepository _repository;
-        private readonly CommonOptions _options;
         private readonly ICacheHandler _cacheHandler;
         private readonly IDictItemNoticeProvider _noticeProvider;
-
-        public DictItemService(IDictItemRepository repository, IMapper mapper, ICacheHandler cacheHandler, CommonOptions options, IDictItemNoticeProvider noticeProvider)
+        private readonly IConfigProvider _configProvider;
+        public DictItemService(IDictItemRepository repository, IMapper mapper, ICacheHandler cacheHandler, IDictItemNoticeProvider noticeProvider, IConfigProvider configProvider)
         {
             _repository = repository;
             _mapper = mapper;
             _cacheHandler = cacheHandler;
-            _options = options;
             _noticeProvider = noticeProvider;
+            _configProvider = configProvider;
         }
 
         public async Task<IResultModel> Query(DictItemQueryModel model)
@@ -124,7 +124,8 @@ namespace NetModular.Module.Common.Application.DictItemService
 
         private async Task ClearCache(string group, string code)
         {
-            if (_options.DictCacheEnabled)
+            var config = _configProvider.Get<CommonConfig>();
+            if (config.DictCacheEnabled)
             {
                 var selectKey = $"{CacheKeys.DICT_SELECT}:{group.ToUpper()}_{code.ToUpper()}";
                 var treeKey = $"{CacheKeys.DICT_TREE}:{group.ToUpper()}_{code.ToUpper()}";

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using NetModular.Lib.Cache.Abstractions;
+using NetModular.Lib.Config.Abstractions;
 using NetModular.Lib.Utils.Core.Result;
 using NetModular.Module.Common.Application.DictItemService.ResultModels;
 using NetModular.Module.Common.Application.DictService.ViewModels;
@@ -18,16 +19,16 @@ namespace NetModular.Module.Common.Application.DictService
         private readonly IMapper _mapper;
         private readonly IDictRepository _repository;
         private readonly IDictItemRepository _itemRepository;
-        private readonly CommonOptions _options;
         private readonly ICacheHandler _cacheHandler;
+        private readonly IConfigProvider _configProvider;
 
-        public DictService(IMapper mapper, IDictRepository repository, ICacheHandler cacheHandler, IDictItemRepository itemRepository, CommonOptions options)
+        public DictService(IMapper mapper, IDictRepository repository, ICacheHandler cacheHandler, IDictItemRepository itemRepository, IConfigProvider configProvider)
         {
             _mapper = mapper;
             _repository = repository;
             _cacheHandler = cacheHandler;
             _itemRepository = itemRepository;
-            _options = options;
+            _configProvider = configProvider;
         }
 
         public async Task<IResultModel> Query(DictQueryModel model)
@@ -105,8 +106,9 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
+            var config = _configProvider.Get<CommonConfig>();
             var key = $"{CacheKeys.DICT_SELECT}:{group.ToUpper()}_{code.ToUpper()}";
-            if (_options.DictCacheEnabled && _cacheHandler.TryGetValue(key, out List<OptionResultModel> result))
+            if (config.DictCacheEnabled && _cacheHandler.TryGetValue(key, out List<OptionResultModel> result))
             {
                 return ResultModel.Success(result);
             }
@@ -127,7 +129,7 @@ namespace NetModular.Module.Common.Application.DictService
                 }
             }).ToList();
 
-            if (_options.DictCacheEnabled)
+            if (config.DictCacheEnabled)
             {
                 await _cacheHandler.SetAsync(key, result);
             }
@@ -140,8 +142,9 @@ namespace NetModular.Module.Common.Application.DictService
             if (group.IsNull() || code.IsNull())
                 return ResultModel.Failed("请指定分组和编码");
 
+            var config = _configProvider.Get<CommonConfig>();
             var key = $"{CacheKeys.DICT_TREE}:{group.ToUpper()}_{code.ToUpper()}";
-            if (_options.DictCacheEnabled && _cacheHandler.TryGetValue(key, out TreeResultModel<int, DictItemTreeResultModel> root))
+            if (config.DictCacheEnabled && _cacheHandler.TryGetValue(key, out TreeResultModel<int, DictItemTreeResultModel> root))
             {
                 return ResultModel.Success(root);
             }
@@ -163,7 +166,7 @@ namespace NetModular.Module.Common.Application.DictService
             var all = await _itemRepository.QueryAll(group, code);
             root.Children = ResolveTree(all);
 
-            if (_options.DictCacheEnabled)
+            if (config.DictCacheEnabled)
             {
                 await _cacheHandler.SetAsync(key, root);
             }
