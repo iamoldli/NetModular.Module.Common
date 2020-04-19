@@ -1,6 +1,6 @@
 import WebHost from 'netmodular-module-admin'
-import config from './config'
 import Common from './index'
+import config from './config'
 
 // 注册模块
 WebHost.registerModule(Common)
