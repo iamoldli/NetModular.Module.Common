@@ -45,26 +45,6 @@ namespace NetModular.Module.Common.Application.AttachmentService
             return ResultModel.Success(result);
         }
 
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<IResultModel> Delete(Guid id)
-        {
-            var entity = await _repository.GetAsync(id);
-            if (entity == null)
-                return ResultModel.NotExists;
-
-            if (await _repository.DeleteAsync(id))
-            {
-
-                return ResultModel.Success();
-            }
-
-            return ResultModel.Failed();
-        }
-
         public async Task<IResultModel<AttachmentUploadResultModel>> Upload(AttachmentUploadModel model, FileInfo fileInfo)
         {
             var result = new ResultModel<AttachmentUploadResultModel>();
