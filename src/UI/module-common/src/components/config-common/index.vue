@@ -1,6 +1,6 @@
 <template>
   <nm-form-page v-bind="form">
-    <el-row :gutter="20">
+    <el-row>
       <el-col :span="10" :offset="1">
         <el-form-item label="字典缓存：" prop="dictCacheEnabled">
           <el-switch v-model="form.model.dictCacheEnabled" />
