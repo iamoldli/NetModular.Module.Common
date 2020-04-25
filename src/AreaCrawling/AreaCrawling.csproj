@@ -1,49 +1,51 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <!--复制本地锁定的程序集到输出目录-->
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<!--复制本地锁定的程序集到输出目录-->
+		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NetModular.Lib.Cache.MemoryCache" Version="1.9.13" />
-    <PackageReference Include="NetModular.Lib.Data.MySql" Version="1.9.15" />
-    <PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.9.15" />
-    <PackageReference Include="NetModular.Lib.Host.Generic" Version="1.9.13" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.23" />
+		<PackageReference Include="NetModular.Lib.Cache.MemoryCache" Version="1.9.13" />
+		<PackageReference Include="NetModular.Lib.Data.MySql" Version="1.9.15" />
+		<PackageReference Include="NetModular.Lib.Data.SQLite" Version="1.9.15" />
+		<PackageReference Include="NetModular.Lib.Host.Generic" Version="1.9.13" />
+		<PackageReference Include="NPinyin.Core" Version="3.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Library\Application\Application.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Library\Application\Application.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="config\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="config\*">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="config\cache.Development.json">
-      <DependentUpon>config\cache.json</DependentUpon>
-    </None>
-    <None Update="config\db.Development.json">
-      <DependentUpon>config\db.json</DependentUpon>
-    </None>
-    <None Update="config\logging.Development.json">
-      <DependentUpon>config\logging.json</DependentUpon>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="config\cache.Development.json">
+			<DependentUpon>config\cache.json</DependentUpon>
+		</None>
+		<None Update="config\db.Development.json">
+			<DependentUpon>config\db.json</DependentUpon>
+		</None>
+		<None Update="config\logging.Development.json">
+			<DependentUpon>config\logging.json</DependentUpon>
+		</None>
+	</ItemGroup>
 
-  <!--打包模块相关文件到NuGet包中，此功能需要编译两次项目才行，因为打包操作在创建_module.json文件之前执行的-->
-  <ItemGroup>
-    <Content Include="$(SolutionDir)\src\WebHost\_modules*\**\*.*" PackagePath="contentFiles\any\any">
-      <Pack>true</Pack>
-      <PackageCopyToOutput>true</PackageCopyToOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<!--打包模块相关文件到NuGet包中，此功能需要编译两次项目才行，因为打包操作在创建_module.json文件之前执行的-->
+	<ItemGroup>
+		<Content Include="$(SolutionDir)\src\WebHost\_modules*\**\*.*" PackagePath="contentFiles\any\any">
+			<Pack>true</Pack>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

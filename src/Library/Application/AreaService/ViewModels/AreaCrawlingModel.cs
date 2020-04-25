@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NetModular.Module.Common.Infrastructure.AreaCrawling
+namespace NetModular.Module.Common.Application.AreaService.ViewModels
 {
     /// <summary>
     /// 区域模型

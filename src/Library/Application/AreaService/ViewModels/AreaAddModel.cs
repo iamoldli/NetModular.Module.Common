@@ -39,5 +39,15 @@ namespace NetModular.Module.Common.Application.AreaService.ViewModels
         /// 区号
         /// </summary>
         public string AreaCode { get; set; }
+
+        /// <summary>
+        /// 拼音
+        /// </summary>
+        public string Pinyin { get; set; }
+
+        /// <summary>
+        /// 简拼
+        /// </summary>
+        public string Jianpin { get; set; }
     }
 }

@@ -8,7 +8,6 @@ using NetModular.Module.Common.Application.AreaService.ViewModels;
 using NetModular.Module.Common.Domain.Area;
 using NetModular.Module.Common.Domain.Area.Models;
 using NetModular.Module.Common.Infrastructure;
-using NetModular.Module.Common.Infrastructure.AreaCrawling;
 using NetModular.Module.Common.Infrastructure.Repositories;
 
 namespace NetModular.Module.Common.Application.AreaService
@@ -46,9 +45,6 @@ namespace NetModular.Module.Common.Application.AreaService
             {
                 return ResultModel.HasExists;
             }
-
-            entity.Pinyin = NPinyin.Pinyin.GetPinyin(entity.Name);
-            entity.Jianpin = NPinyin.Pinyin.GetInitials(entity.Name);
 
             var result = await _repository.AddAsync(entity);
             return ResultModel.Result(result);
@@ -91,9 +87,6 @@ namespace NetModular.Module.Common.Application.AreaService
             {
                 return ResultModel.HasExists;
             }
-
-            entity.Pinyin = NPinyin.Pinyin.GetPinyin(entity.Name);
-            entity.Jianpin = NPinyin.Pinyin.GetInitials(entity.Name);
 
             if (await _repository.UpdateAsync(entity))
             {

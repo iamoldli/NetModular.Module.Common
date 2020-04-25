@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using NetModular.Module.Common.Application.AreaService.ViewModels;
 using NetModular.Module.Common.Domain.Area;
 using NetModular.Module.Common.Domain.Area.Models;
-using NetModular.Module.Common.Infrastructure.AreaCrawling;
 
 namespace NetModular.Module.Common.Application.AreaService
 {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NetModular.Module.Common.Application.AreaService;
-using NetModular.Module.Common.Infrastructure.AreaCrawling;
+using NetModular.Module.Common.AreaCrawling.Core;
 
 namespace NetModular.Module.Common.AreaCrawling
 {

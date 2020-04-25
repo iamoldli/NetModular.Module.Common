@@ -7,6 +7,7 @@ using NetModular.Module.Common.Domain.DictItem;
 using NetModular.Module.Common.Domain.DictItem.Models;
 using NetModular.Module.Common.Infrastructure;
 using NetModular.Module.Common.Infrastructure.DictNoticeProvider;
+using NetModular.Module.Common.Infrastructure.DictSyncProvider;
 using Newtonsoft.Json;
 
 namespace NetModular.Module.Common.Application.DictItemService
@@ -18,13 +19,15 @@ namespace NetModular.Module.Common.Application.DictItemService
         private readonly ICacheHandler _cacheHandler;
         private readonly IDictItemNoticeProvider _noticeProvider;
         private readonly IConfigProvider _configProvider;
-        public DictItemService(IDictItemRepository repository, IMapper mapper, ICacheHandler cacheHandler, IDictItemNoticeProvider noticeProvider, IConfigProvider configProvider)
+        private readonly IDictSyncProvider _dictNameSyncProvider;
+        public DictItemService(IDictItemRepository repository, IMapper mapper, ICacheHandler cacheHandler, IDictItemNoticeProvider noticeProvider, IConfigProvider configProvider, IDictSyncProvider dictNameSyncProvider)
         {
             _repository = repository;
             _mapper = mapper;
             _cacheHandler = cacheHandler;
             _noticeProvider = noticeProvider;
             _configProvider = configProvider;
+            _dictNameSyncProvider = dictNameSyncProvider;
         }
 
         public async Task<IResultModel> Query(DictItemQueryModel model)
@@ -120,6 +123,8 @@ namespace NetModular.Module.Common.Application.DictItemService
             var result = await _repository.UpdateAsync(entity);
             if (result)
             {
+
+                await _dictNameSyncProvider.Sync(entity, oldEntity);
                 _noticeProvider.ChangeNotice(entity, oldEntity);
                 await ClearCache(entity.GroupCode, entity.DictCode);
             }

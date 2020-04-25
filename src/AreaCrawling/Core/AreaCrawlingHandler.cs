@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using NetModular.Lib.Utils.Core.Attributes;
+using NetModular.Module.Common.Application.AreaService.ViewModels;
 using Newtonsoft.Json;
 
-namespace NetModular.Module.Common.Infrastructure.AreaCrawling
+namespace NetModular.Module.Common.AreaCrawling.Core
 {
     /// <summary>
     /// 从 http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2019/index.html 爬取数据
