@@ -7,6 +7,7 @@ using NetModular.Module.Common.Domain.DictItem;
 using NetModular.Module.Common.Domain.DictItem.Models;
 using NetModular.Module.Common.Infrastructure;
 using NetModular.Module.Common.Infrastructure.DictNoticeProvider;
+using Newtonsoft.Json;
 
 namespace NetModular.Module.Common.Application.DictItemService
 {
@@ -106,6 +107,9 @@ namespace NetModular.Module.Common.Application.DictItemService
             if (entity == null)
                 return ResultModel.NotExists;
 
+            //通过JSON序列号深拷贝
+            var oldEntity = JsonConvert.DeserializeObject<DictItemEntity>(JsonConvert.SerializeObject(entity));
+
             _mapper.Map(model, entity);
 
             if (await _repository.Exists(entity))
@@ -116,7 +120,7 @@ namespace NetModular.Module.Common.Application.DictItemService
             var result = await _repository.UpdateAsync(entity);
             if (result)
             {
-                _noticeProvider.ChangeNotice(entity);
+                _noticeProvider.ChangeNotice(entity, oldEntity);
                 await ClearCache(entity.GroupCode, entity.DictCode);
             }
             return ResultModel.Result(result);

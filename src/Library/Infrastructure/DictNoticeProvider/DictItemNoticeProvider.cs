@@ -18,7 +18,7 @@ namespace NetModular.Module.Common.Infrastructure.DictNoticeProvider
             _sp = sp;
         }
 
-        public void ChangeNotice(DictItemEntity entity)
+        public void ChangeNotice(DictItemEntity entity, DictItemEntity oldEntity)
         {
             var list = _sp.GetServices<IDictItemListener>()
                 .Where(m => m.GroupCode.EqualsIgnoreCase(entity.GroupCode) && m.DictCode.EqualsIgnoreCase(entity.DictCode)).ToList();
@@ -28,7 +28,7 @@ namespace NetModular.Module.Common.Infrastructure.DictNoticeProvider
                 var tasks = new List<Task>();
                 foreach (var listener in list)
                 {
-                    tasks.Add(listener.OnChange(entity));
+                    tasks.Add(listener.OnChange(entity, oldEntity));
                 }
 
                 Task.WaitAll(tasks.ToArray());

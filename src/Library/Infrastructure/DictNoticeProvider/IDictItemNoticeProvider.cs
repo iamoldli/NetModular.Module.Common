@@ -10,8 +10,9 @@ namespace NetModular.Module.Common.Infrastructure.DictNoticeProvider
         /// <summary>
         /// 变更通知
         /// </summary>
-        /// <param name="entity"></param>
-        void ChangeNotice(DictItemEntity entity);
+        /// <param name="entity">新实体</param>
+        /// <param name="oldEntity">旧实体</param>
+        void ChangeNotice(DictItemEntity entity, DictItemEntity oldEntity);
 
         /// <summary>
         /// 删除通知

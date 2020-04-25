@@ -22,8 +22,9 @@ namespace NetModular.Module.Common.Infrastructure.DictNoticeProvider
         /// 变更事件
         /// </summary>
         /// <param name="entity"></param>
+        /// <param name="oldEntity"></param>
         /// <returns></returns>
-        Task OnChange(DictItemEntity entity);
+        Task OnChange(DictItemEntity entity, DictItemEntity oldEntity);
 
         /// <summary>
         /// 删除事件
