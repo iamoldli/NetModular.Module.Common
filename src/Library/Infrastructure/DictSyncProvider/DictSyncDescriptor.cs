@@ -18,6 +18,11 @@ namespace NetModular.Module.Common.Infrastructure.DictSyncProvider
         public string DictCode { get; set; }
 
         /// <summary>
+        /// 字典名称字段名
+        /// </summary>
+        public string DictNameColName { get; set; }
+
+        /// <summary>
         /// 实体描述符
         /// </summary>
         public IEntityDescriptor EntityDescriptor { get; set; }

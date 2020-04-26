@@ -50,9 +50,9 @@ namespace NetModular.Module.Common.Infrastructure.DictSyncProvider
                     dynParams.Add(value, oldEntity.Value);
 
                     var tableName = sqlAdapter.AppendQuote(descriptor.EntityDescriptor.TableName);
-                    var nameColName = sqlAdapter.AppendQuote(descriptor.ColumnDescriptor.Name);
-                    var valColName = nameColName.Replace("Name", "");
-                    var sql = $"UPDATE {tableName} SET {nameColName}={name},{valColName}={value} WHERE {nameColName.Replace("Name", "")}={oldValue};";
+                    var valColName = sqlAdapter.AppendQuote(descriptor.ColumnDescriptor.Name);
+                    var nameColName = descriptor.DictNameColName.NotNull() ? descriptor.DictNameColName : valColName + "Name";
+                    var sql = $"UPDATE {tableName} SET {nameColName}={name},{valColName}={value} WHERE {valColName}={oldValue};";
 
                     tasks.Add(descriptor.EntityDescriptor.DbSet.ExecuteAsync(sql, dynParams));
                 }

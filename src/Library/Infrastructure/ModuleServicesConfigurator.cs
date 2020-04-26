@@ -47,13 +47,14 @@ namespace NetModular.Module.Common.Infrastructure
             {
                 foreach (var column in entityDescriptor.Columns)
                 {
-                    var attr = (DictSyncAttribute)Attribute.GetCustomAttribute(column.PropertyInfo.PropertyType, typeof(DictSyncAttribute));
+                    var attr = (DictSyncAttribute)Attribute.GetCustomAttribute(column.PropertyInfo, typeof(DictSyncAttribute));
                     if (attr != null)
                     {
                         collection.Add(new DictSyncDescriptor
                         {
                             GroupCode = attr.GroupCode,
                             DictCode = attr.DictCode,
+                            DictNameColName = attr.DictNameColName,
                             EntityDescriptor = entityDescriptor,
                             ColumnDescriptor = column
                         });
