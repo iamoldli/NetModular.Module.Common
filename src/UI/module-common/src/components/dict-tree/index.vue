@@ -67,15 +67,15 @@ export default {
         this.$emit('change', this.value_, this.selection_)
       })
     },
-    getIds(list, value) {
-      let ids = []
+    getIds(list, value, ids) {
+      if (!ids) ids = []
       list.forEach(m => {
         if (value.includes(m.item.value)) {
           ids.push(m.id)
         }
 
         if (m.children && m.children.length > 0) {
-          ids.concat(this.getIds(m.children, value))
+          ids.concat(this.getIds(m.children, value, ids))
         }
       })
       return ids

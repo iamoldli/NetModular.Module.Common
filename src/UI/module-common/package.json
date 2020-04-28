@@ -1,7 +1,7 @@
 {
   "id": 1,
   "name": "netmodular-module-common",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "code": "common",
   "title": "通用模块",
   "description": "通用模块",
