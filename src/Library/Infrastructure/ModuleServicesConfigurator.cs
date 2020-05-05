@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NetModular.Lib.Data.Abstractions.Entities;
@@ -12,7 +13,7 @@ namespace NetModular.Module.Common.Infrastructure
 {
     public class ModuleServicesConfigurator : IModuleServicesConfigurator
     {
-        public void Configure(IServiceCollection services, IModuleCollection modules, IHostEnvironment env)
+        public void Configure(IServiceCollection services, IModuleCollection modules, IHostEnvironment env, IConfiguration cfg)
         {
             foreach (var module in modules)
             {
