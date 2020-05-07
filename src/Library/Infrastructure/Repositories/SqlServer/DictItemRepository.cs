@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NetModular.Lib.Data.Abstractions;
+using NetModular.Lib.Data.Abstractions.Enums;
 using NetModular.Lib.Data.Core;
 using NetModular.Lib.Data.Query;
 using NetModular.Module.Admin.Domain.Account;
@@ -88,6 +89,20 @@ namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
         public Task<bool> ExistsChild(int id)
         {
             return Db.Find(m => m.ParentId == id).ExistsAsync();
+        }
+
+        public Task<DictItemEntity> Get(string groupCode, string dictCode, string value)
+        {
+            return GetAsync(m => m.GroupCode == groupCode && m.DictCode == dictCode && m.Value == value);
+        }
+
+        public Task<DictItemEntity> GetParent(string groupCode, string dictCode, string value)
+        {
+            var subQuery = Db.Find(m => m.GroupCode == groupCode && m.DictCode == dictCode && m.Value == value)
+                .Select(m => m.ParentId);
+
+            return Db.Find(m => m.GroupCode == groupCode && m.DictCode == dictCode)
+                 .Where(m => m.Id, QueryOperator.Equal, subQuery).FirstAsync();
         }
     }
 }

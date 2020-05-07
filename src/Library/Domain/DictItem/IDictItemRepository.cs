@@ -59,5 +59,23 @@ namespace NetModular.Module.Common.Domain.DictItem
         /// <param name="id"></param>
         /// <returns></returns>
         Task<bool> ExistsChild(int id);
+
+        /// <summary>
+        /// 根据值查询字典项
+        /// </summary>
+        /// <param name="groupCode"></param>
+        /// <param name="dictCode"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<DictItemEntity> Get(string groupCode, string dictCode, string value);
+
+        /// <summary>
+        /// 查询指定值的父级
+        /// </summary>
+        /// <param name="groupCode"></param>
+        /// <param name="dictCode"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        Task<DictItemEntity> GetParent(string groupCode, string dictCode, string value);
     }
 }
