@@ -3,7 +3,7 @@
 namespace NetModular.Module.Common.Infrastructure.DictSyncProvider
 {
     /// <summary>
-    /// 字典同步
+    /// 字典同步特性
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DictSyncAttribute : Attribute

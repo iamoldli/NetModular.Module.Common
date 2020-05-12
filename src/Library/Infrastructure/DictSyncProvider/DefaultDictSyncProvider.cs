@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.Extensions.Logging;
 using NetModular.Lib.Utils.Core.Attributes;
 using NetModular.Module.Common.Domain.DictItem;
 
@@ -10,14 +11,16 @@ namespace NetModular.Module.Common.Infrastructure.DictSyncProvider
     /// <summary>
     /// 默认字典名称同步提供器
     /// </summary>
-    [Singleton()]
+    [Singleton]
     public class DefaultDictSyncProvider : IDictSyncProvider
     {
         private readonly DictSyncDescriptorCollection _descriptorCollection;
+        private readonly ILogger<DefaultDictSyncProvider> _logger;
 
-        public DefaultDictSyncProvider(DictSyncDescriptorCollection descriptorCollection)
+        public DefaultDictSyncProvider(DictSyncDescriptorCollection descriptorCollection, ILogger<DefaultDictSyncProvider> logger)
         {
             _descriptorCollection = descriptorCollection;
+            _logger = logger;
         }
 
         public Task Sync(DictItemEntity entity, DictItemEntity oldEntity)
@@ -47,12 +50,14 @@ namespace NetModular.Module.Common.Infrastructure.DictSyncProvider
 
                     //旧值
                     var oldValue = sqlAdapter.AppendParameter("oldVal");
-                    dynParams.Add(value, oldEntity.Value);
+                    dynParams.Add(oldValue, oldEntity.Value);
 
                     var tableName = sqlAdapter.AppendQuote(descriptor.EntityDescriptor.TableName);
                     var valColName = sqlAdapter.AppendQuote(descriptor.ColumnDescriptor.Name);
-                    var nameColName = descriptor.DictNameColName.NotNull() ? descriptor.DictNameColName : valColName + "Name";
-                    var sql = $"UPDATE {tableName} SET {nameColName}={name},{valColName}={value} WHERE {valColName}={oldValue};";
+                    var nameColName = descriptor.DictNameColName.NotNull() ? descriptor.DictNameColName : descriptor.ColumnDescriptor.Name + "Name";
+                    var sql = $"UPDATE {tableName} SET {sqlAdapter.AppendQuote(nameColName)}={name},{valColName}={value} WHERE {valColName}={oldValue};";
+
+                    _logger.LogDebug(sql);
 
                     tasks.Add(descriptor.EntityDescriptor.DbSet.ExecuteAsync(sql, dynParams));
                 }

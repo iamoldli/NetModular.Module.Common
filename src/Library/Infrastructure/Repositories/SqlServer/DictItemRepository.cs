@@ -68,7 +68,7 @@ namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
         public Task<bool> Exists(DictItemEntity entity)
         {
             return Db.Find(m => m.GroupCode == entity.GroupCode && m.DictCode == entity.DictCode)
-                .Where(m => m.Name == entity.Name || m.Value == entity.Value)
+                .Where(m => m.Value == entity.Value)
                 .WhereNotNull(entity.Id > 0, m => m.Id != entity.Id).ExistsAsync();
         }
 
