@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using NetModular.Module.Common.Application.AreaService.ViewModels;
 
-namespace NetModular.Module.Common.AreaCrawling.Core
+namespace NetModular.Module.Common.Infrastructure.AreaCrawlingHandler
 {
     /// <summary>
     /// 行政区域数据爬取处理

@@ -8,6 +8,7 @@ using NetModular.Module.Common.Application.AreaService.ViewModels;
 using NetModular.Module.Common.Domain.Area;
 using NetModular.Module.Common.Domain.Area.Models;
 using NetModular.Module.Common.Infrastructure;
+using NetModular.Module.Common.Infrastructure.AreaCrawlingHandler;
 using NetModular.Module.Common.Infrastructure.Repositories;
 
 namespace NetModular.Module.Common.Application.AreaService
