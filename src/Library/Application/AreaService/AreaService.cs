@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using NetModular.Lib.Cache.Abstractions;
 using NetModular.Lib.Data.Abstractions;
-using NetModular.Lib.Utils.Core.Attributes;
 using NetModular.Module.Common.Application.AreaService.ViewModels;
 using NetModular.Module.Common.Domain.Area;
 using NetModular.Module.Common.Domain.Area.Models;
@@ -13,7 +12,6 @@ using NetModular.Module.Common.Infrastructure.Repositories;
 
 namespace NetModular.Module.Common.Application.AreaService
 {
-    [Singleton]
     public class AreaService : IAreaService
     {
         private readonly ICacheHandler _cache;
@@ -46,6 +44,9 @@ namespace NetModular.Module.Common.Application.AreaService
             {
                 return ResultModel.HasExists;
             }
+
+            entity.Pinyin = NPinyin.Pinyin.GetPinyin(entity.Name);
+            entity.Jianpin = NPinyin.Pinyin.GetInitials(entity.Name);
 
             var result = await _repository.AddAsync(entity);
             return ResultModel.Result(result);
@@ -88,6 +89,9 @@ namespace NetModular.Module.Common.Application.AreaService
             {
                 return ResultModel.HasExists;
             }
+            
+            entity.Pinyin = NPinyin.Pinyin.GetPinyin(entity.Name);
+            entity.Jianpin = NPinyin.Pinyin.GetInitials(entity.Name);
 
             if (await _repository.UpdateAsync(entity))
             {

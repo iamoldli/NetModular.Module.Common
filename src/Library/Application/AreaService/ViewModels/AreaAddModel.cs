@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace NetModular.Module.Common.Application.AreaService.ViewModels
 {
     /// <summary>
@@ -13,11 +15,13 @@ namespace NetModular.Module.Common.Application.AreaService.ViewModels
         /// <summary>
         /// 名称
         /// </summary>
+        [Required(ErrorMessage = "请输入区域名称")]
         public string Name { get; set; }
 
         /// <summary>
         /// 区域代码
         /// </summary>
+        [Required(ErrorMessage = "请输入区域代码")]
         public string Code { get; set; }
 
         /// <summary>
@@ -39,15 +43,5 @@ namespace NetModular.Module.Common.Application.AreaService.ViewModels
         /// 区号
         /// </summary>
         public string AreaCode { get; set; }
-
-        /// <summary>
-        /// 拼音
-        /// </summary>
-        public string Pinyin { get; set; }
-
-        /// <summary>
-        /// 简拼
-        /// </summary>
-        public string Jianpin { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace NetModular.Module.Common.Infrastructure.Repositories.SqlServer
 
             var query = Db.Find(m => m.ParentId == model.ParentId);
             query.WhereNotNull(model.Name, m => m.Name.Contains(model.Name));
+            query.WhereNotNull(model.Code, m => m.Code.Contains(model.Code));
 
             var result = await query.PaginationAsync(paging);
 

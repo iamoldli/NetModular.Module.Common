@@ -14,5 +14,9 @@ namespace  NetModular.Module.Common.Domain.Area.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// 编码
+        /// </summary>
+        public string Code { get; set; }
     }
 }
