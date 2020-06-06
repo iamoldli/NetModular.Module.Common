@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="NetModular.Lib.Cache.Abstractions" Version="1.9.17" />
-    <PackageReference Include="NetModular.Lib.Data.Query" Version="1.9.27" />
+    <PackageReference Include="NetModular.Lib.Data.Query" Version="1.9.28" />
     <PackageReference Include="NetModular.Lib.Mapper.AutoMapper" Version="1.9.5" />
-    <PackageReference Include="NetModular.Lib.Utils.Core" Version="1.9.14" />
+    <PackageReference Include="NetModular.Lib.Utils.Core" Version="1.9.15" />
   </ItemGroup>
 
   <ItemGroup>
