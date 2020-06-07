@@ -111,8 +111,8 @@ export default {
     },
     onChange() {
       let val = { fullName: '' }
-      for (let i = 1; i < 5; i++) {
-        let prop = this.levelList[i - 1]
+      for (let i = 0; i < this.level.length; i++) {
+        let prop = this.levelList[i]
         if (this[prop].show) {
           val[prop] = this.value_[prop]
         }
@@ -121,9 +121,8 @@ export default {
         }
       }
       if (val.fullName) {
-        val.fullName = val.fullName.substring(0, val.fullName.length - 1)
+        val.fullName = val.fullName.substring(0, val.fullName.length)
       }
-
       this.$emit('input', val)
       this.$emit('change', val)
     }

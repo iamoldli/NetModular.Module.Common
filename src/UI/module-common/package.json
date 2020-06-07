@@ -1,7 +1,7 @@
 {
   "id": 1,
   "name": "netmodular-module-common",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "code": "common",
   "title": "通用模块",
   "description": "通用模块",
@@ -18,15 +18,15 @@
     "pub": "cd ../../../script && npm_publish.ps1"
   },
   "dependencies": {
-    "netmodular-module-admin": "^1.4.7",
-    "netmodular-ui": "^1.8.1"
+    "netmodular-module-admin": "^1.5.1",
+    "netmodular-ui": "^1.8.10"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.3.1",
-    "@vue/cli-plugin-eslint": "^4.3.1",
-    "@vue/cli-plugin-router": "^4.3.1",
-    "@vue/cli-plugin-vuex": "^4.3.1",
-    "@vue/cli-service": "^4.3.1",
+    "@vue/cli-plugin-babel": "^4.4.1",
+    "@vue/cli-plugin-eslint": "^4.4.1",
+    "@vue/cli-plugin-router": "^4.4.1",
+    "@vue/cli-plugin-vuex": "^4.4.1",
+    "@vue/cli-service": "^4.4.1",
     "@vue/eslint-config-prettier": "^5.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
@@ -34,7 +34,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "prettier": "^1.18.2",
     "rimraf": "^3.0.2",
-    "sass": "^1.26.5",
+    "sass": "^1.26.8",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
   }
